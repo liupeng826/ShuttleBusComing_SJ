@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/build/intermediates/res/merged/debug/layout/recordlist.xml",
+        "source": "/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/src/main/res/layout/recordlist.xml"
+    },
+    {
+        "merged": "/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/build/intermediates/res/merged/debug/layout/basicmap_activity.xml",
+        "source": "/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/src/main/res/layout/basicmap_activity.xml"
+    },
+    {
+        "merged": "/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/build/intermediates/res/merged/debug/layout/recorddisplay_activity.xml",
+        "source": "/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/src/main/res/layout/recorddisplay_activity.xml"
+    },
+    {
+        "merged": "/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/build/intermediates/res/merged/debug/layout/recorditem.xml",
+        "source": "/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/src/main/res/layout/recorditem.xml"
+    }
+]
