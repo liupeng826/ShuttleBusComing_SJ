@@ -1,7 +1,7 @@
-#Sat Nov 12 23:19:11 CST 2016
-base.0=/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_080f6a6e002e5a24d5022248bba85f5f268cb899
+#Sun Nov 13 22:22:11 CST 2016
+base.0=/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_9ef640d07d935f956ed26a9042c305eb672270de
 renamed.1=classes2.dex
 renamed.0=classes.dex
-file.1=/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_92659a7d1edd422de5cd3b2b3b865e1232ef3eef/classes.dex
-base.1=/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_92659a7d1edd422de5cd3b2b3b865e1232ef3eef
-file.0=/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_080f6a6e002e5a24d5022248bba85f5f268cb899/classes.dex
+file.1=/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_6f5989d61c278139a5aa973edcab7cec698ad0c8/classes.dex
+base.1=/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_6f5989d61c278139a5aa973edcab7cec698ad0c8
+file.0=/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_9ef640d07d935f956ed26a9042c305eb672270de/classes.dex

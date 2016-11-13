@@ -5,32 +5,32 @@
     density="420dpi"
     format="8"
     plugin-version="2.2.2"
-    timestamp="35421706773498"
-    token="4374215059345540815"
+    timestamp="54932273482823"
+    token="8657696501597050888"
     verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
-        duration="1015" />
+        duration="300" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="397" />
+        duration="124" />
     <task
         name="verifier"
-        duration="36" />
+        duration="17" />
 
     <artifact
-        location="/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/build/outputs/apk/app-debug.apk"
+        location="/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/outputs/apk/app-debug.apk"
         type="MAIN" />
 
     <build
-        timestamp="35421706773498"
+        timestamp="54932273482823"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
-            location="/Users/liupeng/Android/Android Studio/ShuttleBusComing/app/build/outputs/apk/app-debug.apk"
+            location="/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/outputs/apk/app-debug.apk"
             type="MAIN" />
     </build>
 

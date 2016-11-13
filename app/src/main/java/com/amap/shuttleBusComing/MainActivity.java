@@ -3,8 +3,10 @@ package com.amap.shuttleBusComing;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -19,15 +21,30 @@ import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
 import com.amap.database.DbAdapter;
 import com.amap.record.PathRecord;
+import com.amap.util.ApiService;
+import com.amap.util.Coordinate;
+import com.amap.util.CoordinateGson;
 import com.liupeng.shuttleBusComing.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainActivity extends Activity implements LocationSource,
 		AMapLocationListener {
@@ -42,6 +59,9 @@ public class MainActivity extends Activity implements LocationSource,
 	private long mEndTime;
 	private ToggleButton btn;
 	private DbAdapter DbHepler;
+    private Handler handler;
+    private Runnable runnable;
+    private Marker mMarker;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +71,9 @@ public class MainActivity extends Activity implements LocationSource,
 		mMapView.onCreate(savedInstanceState);// 此方法必须重写
 		init();
 		initpolyline();
+
+
+        getDataTask();
 	}
 
 	/**
@@ -84,7 +107,20 @@ public class MainActivity extends Activity implements LocationSource,
 
 	}
 
-	protected void saveRecord(List<AMapLocation> list, String time) {
+    private void getDataTask() {
+        handler=new Handler();
+        runnable=new Runnable() {
+            @Override
+            public void run() {
+                getData();
+                handler.postDelayed(this, 5000);
+            }
+        };
+
+        handler.postDelayed(runnable, 5000);
+    }
+
+    protected void saveRecord(List<AMapLocation> list, String time) {
 		if (list != null && list.size() > 0) {
 			DbHepler = new DbAdapter(this);
 			DbHepler.open();
@@ -210,6 +246,7 @@ public class MainActivity extends Activity implements LocationSource,
 	protected void onDestroy() {
 		super.onDestroy();
 		mMapView.onDestroy();
+        handler.removeCallbacks(runnable);// 关闭定时器处理
 	}
 
 	@Override
@@ -290,5 +327,98 @@ public class MainActivity extends Activity implements LocationSource,
 		Intent intent = new Intent(MainActivity.this, RecordActivity.class);
 		startActivity(intent);
 	}
+
+    public void getData() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://180.76.169.196:8000/")
+                //增加返回值为String的支持
+                .addConverterFactory(ScalarsConverterFactory.create())
+                //增加返回值为Gson的支持(以实体类返回)
+                .addConverterFactory(GsonConverterFactory.create())
+                //增加返回值为Oservable<T>的支持
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        ApiService apiManager = retrofit.create(ApiService.class);//这里采用的是Java的动态代理模式
+
+
+        Call<CoordinateGson> call = apiManager.getCoordinateData("Bus6");
+        call.enqueue(new Callback<CoordinateGson>() {
+            @Override
+            public void onResponse(Call<CoordinateGson> call, Response<CoordinateGson> response) {
+                //处理请求成功
+                List<Coordinate> coordinatesList = new ArrayList<Coordinate>();
+                for (CoordinateGson.DataBean dataBean : response.body().getData()) {
+                    if (mMarker != null) {
+                        mMarker.remove();
+                    }
+                    // 设置当前地图显示为当前位置
+                    LatLng latLng = new LatLng(Double.valueOf(dataBean.getLat()),Double.valueOf(dataBean.getLng()));
+                    mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                    MarkerOptions mMarkerOption = new MarkerOptions();
+                    mMarkerOption.position(latLng);
+                    mMarkerOption.title("班车");
+                    mMarkerOption.draggable(true);
+                    mMarkerOption.icon(
+                            BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                    .decodeResource(getResources(),
+                                            R.drawable.gps)));
+                    // 将Marker设置为贴地显示，可以双指下拉看效果
+                    mMarkerOption.setFlat(true);
+                    mMarkerOption.visible(true);
+                    mMarker = mAMap.addMarker(mMarkerOption);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CoordinateGson> call, Throwable t) {
+                //处理请求失败
+                Toast.makeText(getApplicationContext(), "位置获取失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+
+
+
+
+//                .subscribeOn(Schedulers.io())
+//                .map(new Func1<CoordinateGson, List<Coordinate>>() {
+//                    @Override
+//                    public List<Coordinate> call(CoordinateGson coordinateGson) { //
+//                        List<Coordinate> coordinatesList = new ArrayList<Coordinate>();
+//                        for (CoordinateGson.DataBean dataBean : coordinateGson.getData()) {
+//                            Coordinate Coordinate = new Coordinate();
+//                            Coordinate.setId(String.valueOf(dataBean.getId()));
+//                            Coordinate.setLat(dataBean.getLat());
+//                            Coordinate.setLng(dataBean.getLng());
+//                            Coordinate.setUpdateTime(dataBean.getUpdateTime());
+//                            Coordinate.setCreatedTime(dataBean.getCreatedTime());
+//                            Coordinate.setUser(dataBean.getUser());
+//                            Coordinate.setRole(dataBean.getRole());
+//                            coordinatesList.add(Coordinate);
+//                        }
+//                        return coordinatesList; // 返回类型
+//                    }
+//                })
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<List<Coordinate>>() {
+//                    @Override
+//                    public void onNext(List<Coordinate> coordinatesList) {
+//                        Log.i("coordinatesList:", String.valueOf(coordinatesList.size()));
+//                    }
+//
+//                    @Override
+//                    public void onCompleted() {
+//                        Log.i("onCompleted","onCompleted");
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Toast.makeText(getApplicationContext(), "网络连接失败", Toast.LENGTH_LONG).show();
+//                    }
+//                });
+    }
 
 }
