@@ -94,6 +94,14 @@ public class MainActivity extends Activity implements LocationSource,
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //绑定 Adapter到控件
         spinner.setAdapter(adapter);
+
+        // getKey
+        SharedPreferences settings = getSharedPreferences(mFileName, MODE_PRIVATE);
+        mSelectedBusLine = settings.getString(mLineKey, "NONE");
+        if (!mSelectedBusLine.equals("NONE")) {
+            spinner.setSelection(Integer.valueOf(mSelectedBusLine.replace("Bus", ""))- 1);
+        }
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
@@ -109,6 +117,8 @@ public class MainActivity extends Activity implements LocationSource,
                 editor.putString(mLineKey, "Bus" + line.replace("号线", ""));
                 //步骤3：提交
                 editor.apply();
+
+                mSelectedBusLine = "Bus" + line.replace("号线", "");
 
                 Toast.makeText(getApplicationContext(), "你选择的是:" + line, Toast.LENGTH_SHORT).show();
             }
@@ -371,10 +381,6 @@ public class MainActivity extends Activity implements LocationSource,
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         ApiService apiManager = retrofit.create(ApiService.class);//这里采用的是Java的动态代理模式
-
-        // getKey
-        SharedPreferences settings = getSharedPreferences(mFileName, MODE_PRIVATE);
-        mSelectedBusLine = settings.getString(mLineKey, "NONE");
 
         Call<CoordinateGson> call = apiManager.getCoordinateData(mSelectedBusLine);
         call.enqueue(new Callback<CoordinateGson>() {
