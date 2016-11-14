@@ -7,8 +7,29 @@
                     "startLine": 2,
                     "startColumn": 4,
                     "startOffset": 55,
+                    "endLine": 12,
+                    "endColumn": 19,
+                    "endOffset": 328
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/array.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endLine": 12,
+                        "endColumn": 19,
+                        "endOffset": 328
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 333,
                     "endColumn": 49,
-                    "endOffset": 100
+                    "endOffset": 378
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/colors.xml",
@@ -23,11 +44,11 @@
             },
             {
                 "to": {
-                    "startLine": 3,
+                    "startLine": 14,
                     "startColumn": 4,
-                    "startOffset": 105,
+                    "startOffset": 383,
                     "endColumn": 45,
-                    "endOffset": 146
+                    "endOffset": 424
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/colors.xml",
@@ -42,11 +63,11 @@
             },
             {
                 "to": {
-                    "startLine": 4,
+                    "startLine": 15,
                     "startColumn": 4,
-                    "startOffset": 151,
+                    "startOffset": 429,
                     "endColumn": 46,
-                    "endOffset": 193
+                    "endOffset": 471
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/colors.xml",
@@ -61,11 +82,11 @@
             },
             {
                 "to": {
-                    "startLine": 5,
+                    "startLine": 16,
                     "startColumn": 4,
-                    "startOffset": 198,
+                    "startOffset": 476,
                     "endColumn": 50,
-                    "endOffset": 244
+                    "endOffset": 522
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/colors.xml",
@@ -80,11 +101,11 @@
             },
             {
                 "to": {
-                    "startLine": 7,
+                    "startLine": 18,
                     "startColumn": 4,
-                    "startOffset": 434,
+                    "startOffset": 712,
                     "endColumn": 57,
-                    "endOffset": 487
+                    "endOffset": 765
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/dimens.xml",
@@ -99,11 +120,11 @@
             },
             {
                 "to": {
-                    "startLine": 8,
+                    "startLine": 19,
                     "startColumn": 4,
-                    "startOffset": 492,
+                    "startOffset": 770,
                     "endColumn": 55,
-                    "endOffset": 543
+                    "endOffset": 821
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/dimens.xml",
@@ -118,11 +139,11 @@
             },
             {
                 "to": {
-                    "startLine": 9,
+                    "startLine": 20,
                     "startColumn": 4,
-                    "startOffset": 548,
+                    "startOffset": 826,
                     "endColumn": 52,
-                    "endOffset": 596
+                    "endOffset": 874
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/strings.xml",
@@ -137,11 +158,11 @@
             },
             {
                 "to": {
-                    "startLine": 10,
+                    "startLine": 21,
                     "startColumn": 4,
-                    "startOffset": 601,
+                    "startOffset": 879,
                     "endColumn": 41,
-                    "endOffset": 638
+                    "endOffset": 916
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/strings.xml",
@@ -156,11 +177,11 @@
             },
             {
                 "to": {
-                    "startLine": 11,
+                    "startLine": 22,
                     "startColumn": 4,
-                    "startOffset": 643,
+                    "startOffset": 921,
                     "endColumn": 53,
-                    "endOffset": 692
+                    "endOffset": 970
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/strings.xml",
@@ -175,11 +196,11 @@
             },
             {
                 "to": {
-                    "startLine": 12,
+                    "startLine": 23,
                     "startColumn": 4,
-                    "startOffset": 697,
+                    "startOffset": 975,
                     "endColumn": 56,
-                    "endOffset": 749
+                    "endOffset": 1027
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/strings.xml",
@@ -194,11 +215,11 @@
             },
             {
                 "to": {
-                    "startLine": 13,
+                    "startLine": 24,
                     "startColumn": 4,
-                    "startOffset": 754,
+                    "startOffset": 1032,
                     "endColumn": 52,
-                    "endOffset": 802
+                    "endOffset": 1080
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/strings.xml",
@@ -213,11 +234,11 @@
             },
             {
                 "to": {
-                    "startLine": 14,
+                    "startLine": 25,
                     "startColumn": 4,
-                    "startOffset": 807,
+                    "startOffset": 1085,
                     "endColumn": 72,
-                    "endOffset": 875
+                    "endOffset": 1153
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/strings.xml",
@@ -232,12 +253,12 @@
             },
             {
                 "to": {
-                    "startLine": 15,
+                    "startLine": 26,
                     "startColumn": 4,
-                    "startOffset": 880,
-                    "endLine": 17,
+                    "startOffset": 1158,
+                    "endLine": 28,
                     "endColumn": 12,
-                    "endOffset": 1039
+                    "endOffset": 1317
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/styles.xml",
@@ -253,12 +274,12 @@
             },
             {
                 "to": {
-                    "startLine": 18,
+                    "startLine": 29,
                     "startColumn": 4,
-                    "startOffset": 1044,
-                    "endLine": 24,
+                    "startOffset": 1322,
+                    "endLine": 35,
                     "endColumn": 12,
-                    "endOffset": 1493
+                    "endOffset": 1771
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/res/values/styles.xml",

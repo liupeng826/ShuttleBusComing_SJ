@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:2:1-48:12
+ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:2:1-47:12
 	package
 		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:3:5-43
 		INJECTED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml
@@ -87,12 +87,12 @@ uses-permission#android.permission.WAKE_LOCK
 ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:23:5-68
 	android:name
 		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:23:22-65
-android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:25:5-88
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:24:5-80
 	android:name
-		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:25:30-85
+		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:24:22-77
 application
-ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:27:5-46:19
+ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:26:5-45:19
 MERGED from [com.android.support:support-v4:25.0.0] /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.0.0/AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:support-compat:25.0.0] /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.0/AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:support-media-compat:25.0.0] /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.0/AndroidManifest.xml:25:5-20
@@ -100,34 +100,34 @@ MERGED from [com.android.support:support-core-utils:25.0.0] /Users/liupeng/Andro
 MERGED from [com.android.support:support-core-ui:25.0.0] /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.0/AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:support-fragment:25.0.0] /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.0/AndroidManifest.xml:25:5-20
 	android:label
-		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:30:9-41
+		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:29:9-41
 	android:allowBackup
-		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:28:9-35
+		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:27:9-35
 	android:icon
-		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:29:9-45
+		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:28:9-45
 	android:theme
-		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:31:9-56
+		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:30:9-56
 meta-data#com.amap.api.v2.apikey
-ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:32:9-35:21
+ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:31:9-34:21
 	android:value
-		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:34:13-61
+		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:33:13-61
 	android:name
-		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:33:13-50
+		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:32:13-50
 activity#com.amap.shuttleBusComing.MainActivity
-ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:37:9-43:20
+ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:36:9-42:20
 	android:name
-		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:37:19-72
+		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:36:19-72
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:38:13-42:29
+ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:37:13-41:29
 action#android.intent.action.MAIN
-ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:39:17-69
+ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:38:17-69
 	android:name
-		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:39:25-66
+		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:38:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:41:17-77
+ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:40:17-77
 	android:name
-		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:41:27-74
+		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:40:27-74
 service#com.amap.api.location.APSService
-ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:45:9-68
+ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:44:9-68
 	android:name
-		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:45:18-65
+		ADDED from /Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/src/main/AndroidManifest.xml:44:18-65
