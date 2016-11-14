@@ -93,10 +93,6 @@ public class PathRecord {
 		mPathLinePoints.add(point);
 	}
 
-	public void postLocation(AMapLocation point) {
-		mPathLinePoints.add(point);
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder record = new StringBuilder();

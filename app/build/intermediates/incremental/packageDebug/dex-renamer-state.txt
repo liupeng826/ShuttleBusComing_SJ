@@ -1,4 +1,4 @@
-#Sun Nov 13 22:22:11 CST 2016
+#Mon Nov 14 16:00:50 CST 2016
 base.0=/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_9ef640d07d935f956ed26a9042c305eb672270de
 renamed.1=classes2.dex
 renamed.0=classes.dex

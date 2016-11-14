@@ -2,11 +2,14 @@ package com.amap.shuttleBusComing;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -33,6 +36,8 @@ import com.amap.util.Coordinate;
 import com.amap.util.CoordinateGson;
 import com.liupeng.shuttleBusComing.R;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +67,7 @@ public class MainActivity extends Activity implements LocationSource,
     private Handler handler;
     private Runnable runnable;
     private Marker mMarker;
+	private String mSelectedBusLine;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +76,10 @@ public class MainActivity extends Activity implements LocationSource,
 		mMapView = (MapView) findViewById(R.id.map);
 		mMapView.onCreate(savedInstanceState);// 此方法必须重写
 		init();
-		initpolyline();
+		//initpolyline();
 
 
-        getDataTask();
+        //getDataTask();
 	}
 
 	/**
@@ -268,21 +274,21 @@ public class MainActivity extends Activity implements LocationSource,
 
 	@Override
 	public void onLocationChanged(AMapLocation amapLocation) {
-		if (mListener != null && amapLocation != null) {
-			if (amapLocation != null && amapLocation.getErrorCode() == 0) {
-				mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-				LatLng mylocation = new LatLng(amapLocation.getLatitude(),
-						amapLocation.getLongitude());
-				mAMap.moveCamera(CameraUpdateFactory.changeLatLng(mylocation));
-				// 上传定位信息
-                if (amapLocation.getAccuracy() < 80.0) {
-                    record.postLocation(amapLocation);
+//        amapLocation.setLatitude(39.14097855);
+//        amapLocation.setLongitude(117.40161896);
+//        amapLocation.setAccuracy(4);
+//        amapLocation.setErrorCode(0);
 
-                    record.addpoint(amapLocation);
-                    mPolyoptions.add(mylocation);
-                    redrawline();
-                }
-			}
+        if (mListener != null && amapLocation != null && amapLocation.getErrorCode() == 0) {
+        //if (mListener != null && amapLocation != null) {
+            mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
+            LatLng mylocation = new LatLng(amapLocation.getLatitude(),
+                    amapLocation.getLongitude());
+            mAMap.moveCamera(CameraUpdateFactory.changeLatLng(mylocation));
+            // 上传定位信息
+            if (amapLocation.getAccuracy() < 80.0) {
+                postLocation(mylocation);
+            }
 		}
 	}
 
@@ -340,14 +346,15 @@ public class MainActivity extends Activity implements LocationSource,
                 .build();
         ApiService apiManager = retrofit.create(ApiService.class);//这里采用的是Java的动态代理模式
 
-
-        Call<CoordinateGson> call = apiManager.getCoordinateData("Bus6");
+        mSelectedBusLine = "Bus6";
+        Call<CoordinateGson> call = apiManager.getCoordinateData(mSelectedBusLine);
         call.enqueue(new Callback<CoordinateGson>() {
             @Override
             public void onResponse(Call<CoordinateGson> call, Response<CoordinateGson> response) {
                 //处理请求成功
                 List<Coordinate> coordinatesList = new ArrayList<Coordinate>();
                 for (CoordinateGson.DataBean dataBean : response.body().getData()) {
+
                     if (mMarker != null) {
                         mMarker.remove();
                     }
@@ -375,12 +382,6 @@ public class MainActivity extends Activity implements LocationSource,
                 Toast.makeText(getApplicationContext(), "位置获取失败", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
-
-
 
 
 //                .subscribeOn(Schedulers.io())
@@ -419,6 +420,75 @@ public class MainActivity extends Activity implements LocationSource,
 //                        Toast.makeText(getApplicationContext(), "网络连接失败", Toast.LENGTH_LONG).show();
 //                    }
 //                });
+    }
+
+    public void postLocation(LatLng mylocation) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://180.76.169.196:8000/")
+                //增加返回值为String的支持
+                .addConverterFactory(ScalarsConverterFactory.create())
+                //增加返回值为Gson的支持(以实体类返回)
+                .addConverterFactory(GsonConverterFactory.create())
+                //增加返回值为Oservable<T>的支持
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        ApiService apiManager = retrofit.create(ApiService.class);//这里采用的是Java的动态代理模式
+
+        Coordinate coordinate = new Coordinate();
+        coordinate.setUser(getDeviceId(this));
+        coordinate.setLat(String.valueOf(mylocation.latitude));
+        coordinate.setLng(String.valueOf(mylocation.longitude));
+
+        Call<Coordinate> call = apiManager.updateCoordinate(coordinate);
+        call.enqueue(new Callback<Coordinate>() {
+            @Override
+            public void onResponse(Call<Coordinate> call, Response<Coordinate> response) {
+                //处理请求成功
+            }
+
+            @Override
+            public void onFailure(Call<Coordinate> call, Throwable t) {
+                //处理请求失败
+                Toast.makeText(getApplicationContext(), "位置获取失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public static String getDeviceId(Context context) {
+
+        // IMEI
+        TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        String m_szImei = tm.getDeviceId();
+
+        // The WLAN MAC Address string
+        WifiManager wm = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+        String m_szWLANMAC = wm.getConnectionInfo().getMacAddress();
+
+        String m_szLongID = m_szImei+ m_szWLANMAC;
+// compute md5
+        MessageDigest m = null;
+        try {
+            m = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        m.update(m_szLongID.getBytes(),0,m_szLongID.length());
+// get md5 bytes
+        byte p_md5Data[] = m.digest();
+// create a hex string
+        String m_szUniqueID = new String();
+        for (int i=0;i<p_md5Data.length;i++) {
+            int b =  (0xFF & p_md5Data[i]);
+// if it is a single digit, make sure it have 0 in front (proper padding)
+            if (b <= 0xF)
+                m_szUniqueID+="0";
+// add number to string
+            m_szUniqueID+=Integer.toHexString(b);
+        }   // hex string to uppercase
+        m_szUniqueID = m_szUniqueID.toUpperCase();
+
+        return m_szUniqueID;
+
     }
 
 }

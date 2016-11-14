@@ -5,33 +5,39 @@
     density="420dpi"
     format="8"
     plugin-version="2.2.2"
-    timestamp="54932273482823"
+    timestamp="8969157097737"
     token="8657696501597050888"
-    verifier="FULL_BUILD_REQUESTED" >
+    verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="300" />
+        duration="0" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="124" />
+        duration="0" />
     <task
         name="verifier"
-        duration="17" />
-
-    <artifact
-        location="/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/outputs/apk/app-debug.apk"
-        type="MAIN" />
+        duration="0" />
 
     <build
-        timestamp="54932273482823"
+        timestamp="8302329431595"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/outputs/apk/app-debug.apk"
             type="MAIN" />
     </build>
+    <build
+        timestamp="8616983103845"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/Users/liupeng/Android/AndroidStudio/ShuttleBusComing/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_9/classes.dex"
+            type="DEX" />
+    </build>
+    <build
+        timestamp="8969157097737"
+        verifier="COLD_SWAP_REQUESTED" />
 
 </instant-run>
