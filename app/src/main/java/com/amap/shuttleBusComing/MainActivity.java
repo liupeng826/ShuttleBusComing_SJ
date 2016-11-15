@@ -1,9 +1,7 @@
 package com.amap.shuttleBusComing;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -17,14 +15,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
@@ -33,8 +29,6 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
-import com.amap.database.DbAdapter;
-import com.amap.record.PathRecord;
 import com.amap.util.ApiService;
 import com.amap.util.Coordinate;
 import com.amap.util.CoordinateGson;
@@ -42,9 +36,7 @@ import com.liupeng.shuttleBusComing.R;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -63,11 +55,6 @@ public class MainActivity extends Activity implements LocationSource,
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
     private PolylineOptions mPolyoptions;
-    private PathRecord record;
-    private long mStartTime;
-    private long mEndTime;
-    private ToggleButton btn;
-    private DbAdapter DbHepler;
     private Handler handler;
     private Runnable runnable;
     private Marker mMarker;
@@ -84,6 +71,19 @@ public class MainActivity extends Activity implements LocationSource,
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
         init();
+        // new task to get coordinate data
+        getDataTask();
+    }
+
+    /**
+     * 初始化AMap对象
+     */
+    private void init() {
+        // 地图
+        if (mAMap == null) {
+            mAMap = mMapView.getMap();
+            setUpMap();
+        }
 
         // 初始化控件
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -95,11 +95,12 @@ public class MainActivity extends Activity implements LocationSource,
         //绑定 Adapter到控件
         spinner.setAdapter(adapter);
 
-        // getKey
+        // 读取存储数据
         SharedPreferences settings = getSharedPreferences(mFileName, MODE_PRIVATE);
-        mSelectedBusLine = settings.getString(mLineKey, "NONE");
-        if (!mSelectedBusLine.equals("NONE")) {
-            spinner.setSelection(Integer.valueOf(mSelectedBusLine.replace("Bus", ""))- 1);
+        mSelectedBusLine = "Bus" + settings.getInt(mLineKey, 0);
+
+        if (!mSelectedBusLine.equals("Bus0")) {
+            spinner.setSelection(settings.getInt(mLineKey, 0) - 1);
         }
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -110,17 +111,16 @@ public class MainActivity extends Activity implements LocationSource,
 
                 // 存储选择数据
                 //步骤1：获取输入值
-                String line = lines[pos].trim();
                 //步骤2-1：创建一个SharedPreferences.Editor接口对象，lock表示要写入的XML文件名
                 SharedPreferences.Editor editor = getSharedPreferences(mFileName, MODE_PRIVATE).edit();
                 //步骤2-2：将获取过来的值放入文件
-                editor.putString(mLineKey, "Bus" + line.replace("号线", ""));
+                editor.putInt(mLineKey, pos + 1);
                 //步骤3：提交
                 editor.apply();
 
-                mSelectedBusLine = "Bus" + line.replace("号线", "");
+                mSelectedBusLine = "Bus" + (pos + 1);
 
-                Toast.makeText(getApplicationContext(), "你选择的是:" + line, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "你选择的是:" + lines[pos].trim(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -128,19 +128,6 @@ public class MainActivity extends Activity implements LocationSource,
                 // Another interface callback
             }
         });
-
-        // new task to get coordinate data
-        getDataTask();
-    }
-
-    /**
-     * 初始化AMap对象
-     */
-    private void init() {
-        if (mAMap == null) {
-            mAMap = mMapView.getMap();
-            setUpMap();
-        }
     }
 
     private void getDataTask() {
@@ -154,70 +141,6 @@ public class MainActivity extends Activity implements LocationSource,
         };
 
         handler.postDelayed(runnable, 5000);
-    }
-
-    protected void saveRecord(List<AMapLocation> list, String time) {
-        if (list != null && list.size() > 0) {
-            DbHepler = new DbAdapter(this);
-            DbHepler.open();
-            String duration = getDuration();
-            float distance = getDistance(list);
-            String average = getAverage(distance);
-            String pathlineSring = getPathLineString(list);
-            AMapLocation firstLocaiton = list.get(0);
-            AMapLocation lastLocaiton = list.get(list.size() - 1);
-            String stratpoint = amapLocationToString(firstLocaiton);
-            String endpoint = amapLocationToString(lastLocaiton);
-            DbHepler.createrecord(String.valueOf(distance), duration, average,
-                    pathlineSring, stratpoint, endpoint, time);
-            DbHepler.close();
-        } else {
-            Toast.makeText(MainActivity.this, "没有记录到路径", Toast.LENGTH_SHORT)
-                    .show();
-        }
-    }
-
-    private String getDuration() {
-        return String.valueOf((mEndTime - mStartTime) / 1000f);
-    }
-
-    private String getAverage(float distance) {
-        return String.valueOf(distance / (float) (mEndTime - mStartTime));
-    }
-
-    private float getDistance(List<AMapLocation> list) {
-        float distance = 0;
-        if (list == null || list.size() == 0) {
-            return distance;
-        }
-        for (int i = 0; i < list.size() - 1; i++) {
-            AMapLocation firstpoint = list.get(i);
-            AMapLocation secondpoint = list.get(i + 1);
-            LatLng firstLatLng = new LatLng(firstpoint.getLatitude(),
-                    firstpoint.getLongitude());
-            LatLng secondLatLng = new LatLng(secondpoint.getLatitude(),
-                    secondpoint.getLongitude());
-            double betweenDis = AMapUtils.calculateLineDistance(firstLatLng,
-                    secondLatLng);
-            distance = (float) (distance + betweenDis);
-        }
-        return distance;
-    }
-
-    private String getPathLineString(List<AMapLocation> list) {
-        if (list == null || list.size() == 0) {
-            return "";
-        }
-        StringBuffer pathline = new StringBuffer();
-        for (int i = 0; i < list.size(); i++) {
-            AMapLocation location = list.get(i);
-            String locString = amapLocationToString(location);
-            pathline.append(locString).append(";");
-        }
-        String pathLineString = pathline.toString();
-        pathLineString = pathLineString.substring(0,
-                pathLineString.length() - 1);
-        return pathLineString;
     }
 
     private String amapLocationToString(AMapLocation location) {
@@ -246,6 +169,9 @@ public class MainActivity extends Activity implements LocationSource,
         mAMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
+
+        // 指南针
+        mAMap.getUiSettings().setCompassEnabled(true);
     }
 
     /**
@@ -305,7 +231,6 @@ public class MainActivity extends Activity implements LocationSource,
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
         if (mListener != null && amapLocation != null && amapLocation.getErrorCode() == 0) {
-            //if (mListener != null && amapLocation != null) {
             mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
             LatLng mylocation = new LatLng(amapLocation.getLatitude(),
                     amapLocation.getLongitude());
@@ -334,7 +259,7 @@ public class MainActivity extends Activity implements LocationSource,
             //设置是否强制刷新WIFI，默认为强制刷新
             mLocationOption.setWifiActiveScan(true);
             //设置是否允许模拟位置,默认为false，不允许模拟位置
-            mLocationOption.setMockEnable(true);
+            //mLocationOption.setMockEnable(true);
             //设置定位间隔,单位毫秒,默认为2000ms
             mLocationOption.setInterval(3000);
             //给定位客户端对象设置定位参数
@@ -356,20 +281,6 @@ public class MainActivity extends Activity implements LocationSource,
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private String getcueDate(long time) {
-        SimpleDateFormat formatter = new SimpleDateFormat(
-                "yyyy-MM-dd  HH:mm:ss ");
-        Date curDate = new Date(time);
-        String date = formatter.format(curDate);
-        return date;
-    }
-
-    public void record(View view) {
-        Intent intent = new Intent(MainActivity.this, RecordActivity.class);
-        startActivity(intent);
-    }
-
     public void getData() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
@@ -387,11 +298,6 @@ public class MainActivity extends Activity implements LocationSource,
             @Override
             public void onResponse(Call<CoordinateGson> call, Response<CoordinateGson> response) {
                 //处理请求成功
-
-                if (mMarker != null) {
-                    mMarker.remove();
-                }
-
                 List<Coordinate> coordinatesList = new ArrayList<Coordinate>();
                 for (CoordinateGson.DataBean dataBean : response.body().getData()) {
 
@@ -405,11 +311,16 @@ public class MainActivity extends Activity implements LocationSource,
                     mMarkerOption.icon(
                             BitmapDescriptorFactory.fromBitmap(BitmapFactory
                                     .decodeResource(getResources(),
-                                            R.drawable.gps)));
+                                            R.drawable.marker)));
                     // 将Marker设置为贴地显示，可以双指下拉看效果
                     mMarkerOption.setFlat(true);
                     mMarkerOption.visible(true);
-                    mMarker = mAMap.addMarker(mMarkerOption);
+
+                    if (mMarker != null) {
+                        mMarker.setPosition(latLng);
+                    } else {
+                        mMarker = mAMap.addMarker(mMarkerOption);
+                    }
                 }
             }
 

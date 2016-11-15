@@ -33,38 +33,19 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class drawable {
         public static final int back_btn_image=0x7f020000;
-        public static final int end=0x7f020001;
-        public static final int gps=0x7f020002;
-        public static final int grasp_flag=0x7f020003;
-        public static final int grasp_trace_line=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int marker=0x7f020006;
-        public static final int point5=0x7f020007;
-        public static final int start=0x7f020008;
-        public static final int title_background=0x7f020009;
-        public static final int walk=0x7f02000a;
+        public static final int gps=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int marker=0x7f020003;
+        public static final int point5=0x7f020004;
+        public static final int title_background=0x7f020005;
+        public static final int walk=0x7f020006;
     }
     public static final class id {
-        public static final int date=0x7f090009;
-        public static final int displaybtn=0x7f090005;
         public static final int map=0x7f090000;
-        public static final int record=0x7f09000a;
-        public static final int record_show_activity_grasp_radio_button=0x7f090008;
-        public static final int record_show_activity_origin_radio_button=0x7f090007;
-        public static final int record_show_activity_trace_group=0x7f090006;
-        public static final int recordlist=0x7f09000d;
         public static final int spinner=0x7f090001;
-        public static final int title=0x7f090002;
-        public static final int title_center=0x7f090004;
-        public static final int title_lly_back=0x7f090003;
-        public static final int title_lly_right=0x7f09000b;
-        public static final int title_tv_option=0x7f09000c;
     }
     public static final class layout {
         public static final int basicmap_activity=0x7f030000;
-        public static final int recorddisplay_activity=0x7f030001;
-        public static final int recorditem=0x7f030002;
-        public static final int recordlist=0x7f030003;
     }
     public static final class string {
         public static final int action_settings=0x7f070000;
