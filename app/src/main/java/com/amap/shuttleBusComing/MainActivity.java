@@ -9,6 +9,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -47,6 +48,8 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+import static android.content.ContentValues.TAG;
+
 public class MainActivity extends Activity implements LocationSource,
         AMapLocationListener {
     private MapView mMapView;
@@ -62,6 +65,8 @@ public class MainActivity extends Activity implements LocationSource,
     final String URL = "http://180.76.169.196:8000/";
     final String mFileName = "BusLine";
     final String mLineKey = "LINE_KEY";
+    final String mUUIDKey = "UUID_KEY";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +136,7 @@ public class MainActivity extends Activity implements LocationSource,
     }
 
     private void getDataTask() {
+
         handler = new Handler();
         runnable = new Runnable() {
             @Override
@@ -207,8 +213,15 @@ public class MainActivity extends Activity implements LocationSource,
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMapView.onDestroy();
-        handler.removeCallbacks(runnable);// 关闭定时器处理
+
+
+        try {
+            mMapView.onDestroy();
+            handler.removeCallbacks(runnable);// 关闭定时器处理
+        }
+        catch(RuntimeException e) {
+            Log.e(TAG, "onDestroy: ", e);
+        }
     }
 
     @Override
@@ -274,13 +287,6 @@ public class MainActivity extends Activity implements LocationSource,
         }
     }
 
-    private void redrawline() {
-        if (mPolyoptions.getPoints().size() > 0) {
-            mAMap.clear(true);
-            mAMap.addPolyline(mPolyoptions);
-        }
-    }
-
     public void getData() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
@@ -298,6 +304,11 @@ public class MainActivity extends Activity implements LocationSource,
             @Override
             public void onResponse(Call<CoordinateGson> call, Response<CoordinateGson> response) {
                 //处理请求成功
+
+                if (mMarker != null) {
+                    mMarker.remove();
+                }
+
                 List<Coordinate> coordinatesList = new ArrayList<Coordinate>();
                 for (CoordinateGson.DataBean dataBean : response.body().getData()) {
 
@@ -316,21 +327,17 @@ public class MainActivity extends Activity implements LocationSource,
                     mMarkerOption.setFlat(true);
                     mMarkerOption.visible(true);
 
-                    if (mMarker != null) {
-                        mMarker.setPosition(latLng);
-                    } else {
-                        mMarker = mAMap.addMarker(mMarkerOption);
-                    }
+                    //mMarker.setPosition(latLng);
+                    mMarker = mAMap.addMarker(mMarkerOption);
                 }
             }
 
             @Override
             public void onFailure(Call<CoordinateGson> call, Throwable t) {
                 //处理请求失败
-                Toast.makeText(getApplicationContext(), "位置获取失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), mSelectedBusLine + "位置获取失败", Toast.LENGTH_SHORT).show();
             }
         });
-
 
 //                .subscribeOn(Schedulers.io())
 //                .map(new Func1<CoordinateGson, List<Coordinate>>() {
@@ -383,7 +390,7 @@ public class MainActivity extends Activity implements LocationSource,
         ApiService apiManager = retrofit.create(ApiService.class);//这里采用的是Java的动态代理模式
 
         Coordinate coordinate = new Coordinate();
-        coordinate.setUser(getDeviceId(this));
+        coordinate.setUser(getuuid(this));
         coordinate.setLat(String.valueOf(myLocation.latitude));
         coordinate.setLng(String.valueOf(myLocation.longitude));
 
@@ -402,40 +409,57 @@ public class MainActivity extends Activity implements LocationSource,
         });
     }
 
-    public static String getDeviceId(Context context) {
+    public String getuuid(Context context) {
+        String mUUID = "";
+        // 读取存储数据
+        SharedPreferences settings = getSharedPreferences(mFileName, MODE_PRIVATE);
+        mUUID = settings.getString(mUUIDKey, "");
 
-        // IMEI
-        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String m_szImei = tm.getDeviceId();
+        if (mUUID.equals("")) {
 
-        // The WLAN MAC Address string
-        WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        String m_szWLANMAC = wm.getConnectionInfo().getMacAddress();
+            // IMEI
+            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            String m_szImei = tm.getDeviceId();
 
-        String m_szLongID = m_szImei + m_szWLANMAC;
-        // compute md5
-        MessageDigest m = null;
-        try {
-            m = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            // The WLAN MAC Address string
+            WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            String m_szWLANMAC = wm.getConnectionInfo().getMacAddress();
+
+            String m_szLongID = m_szImei + m_szWLANMAC;
+            // compute md5
+            MessageDigest m = null;
+            try {
+                m = MessageDigest.getInstance("MD5");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            m.update(m_szLongID.getBytes(), 0, m_szLongID.length());
+            // get md5 bytes
+            byte p_md5Data[] = m.digest();
+            // create a hex string
+            String m_szUniqueID = new String();
+            for (int i = 0; i < p_md5Data.length; i++) {
+                int b = (0xFF & p_md5Data[i]);
+                // if it is a single digit, make sure it have 0 in front (proper padding)
+                if (b <= 0xF)
+                    m_szUniqueID += "0";
+                // add number to string
+                m_szUniqueID += Integer.toHexString(b);
+            }   // hex string to uppercase
+            mUUID = m_szUniqueID.toUpperCase();
+
+
+            // 存储UUID
+            //步骤1：获取输入值
+            //步骤2-1：创建一个SharedPreferences.Editor接口对象，lock表示要写入的XML文件名
+            SharedPreferences.Editor editor = getSharedPreferences(mFileName, MODE_PRIVATE).edit();
+            //步骤2-2：将获取过来的值放入文件
+            editor.putString(mUUIDKey, mUUID);
+            //步骤3：提交
+            editor.apply();
         }
-        m.update(m_szLongID.getBytes(), 0, m_szLongID.length());
-        // get md5 bytes
-        byte p_md5Data[] = m.digest();
-        // create a hex string
-        String m_szUniqueID = new String();
-        for (int i = 0; i < p_md5Data.length; i++) {
-            int b = (0xFF & p_md5Data[i]);
-            // if it is a single digit, make sure it have 0 in front (proper padding)
-            if (b <= 0xF)
-                m_szUniqueID += "0";
-            // add number to string
-            m_szUniqueID += Integer.toHexString(b);
-        }   // hex string to uppercase
-        m_szUniqueID = m_szUniqueID.toUpperCase();
 
-        return m_szUniqueID;
+        return mUUID;
     }
 
 }

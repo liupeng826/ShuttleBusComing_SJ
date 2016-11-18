@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25"
 
     defaultConfig {
         applicationId "com.liupeng.shuttleBusComing"
-        minSdkVersion 21
+        minSdkVersion 15
         targetSdkVersion 25
     }
 
@@ -23,10 +23,8 @@ dependencies {
     compile files('libs/AMap_Location_V2.4.1_20160414.jar')
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.android.support:support-v4:25.0.0'
     compile 'com.google.code.gson:gson:2.4'
 
-    //rxjava
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.squareup.retrofit2:retrofit-converters:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'

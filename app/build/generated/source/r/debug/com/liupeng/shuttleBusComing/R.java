@@ -37,8 +37,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_launcher=0x7f020002;
         public static final int marker=0x7f020003;
         public static final int point5=0x7f020004;
-        public static final int title_background=0x7f020005;
-        public static final int walk=0x7f020006;
+        public static final int shuttlebus=0x7f020005;
+        public static final int title_background=0x7f020006;
+        public static final int walk=0x7f020007;
     }
     public static final class id {
         public static final int map=0x7f090000;
