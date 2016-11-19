@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,7 +28,6 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.PolylineOptions;
 import com.amap.util.ApiService;
 import com.amap.util.Coordinate;
 import com.amap.util.CoordinateGson;
@@ -56,12 +54,16 @@ public class MainActivity extends Activity implements LocationSource,
     private AMap mAMap;
     private OnLocationChangedListener mListener;
     private AMapLocationClient mLocationClient;
-    private AMapLocationClientOption mLocationOption;
-    private PolylineOptions mPolyoptions;
     private Handler handler;
     private Runnable runnable;
     private Marker mMarker;
+    private List<LatLng> mLocations;
     private String mSelectedBusLine;
+
+    // 通过设置间隔时间和距离可以控制速度和图标移动的距离
+    private static final double DISTANCE = 0.0001;
+
+    private static final int FETCH_TIME_INTERVAL = 5000;
     final String URL = "http://180.76.169.196:8000/";
     final String mFileName = "BusLine";
     final String mLineKey = "LINE_KEY";
@@ -75,15 +77,20 @@ public class MainActivity extends Activity implements LocationSource,
         setContentView(R.layout.basicmap_activity);
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
+
         init();
         // new task to get coordinate data
         getDataTask();
+        //initRoadData();
     }
 
     /**
      * 初始化AMap对象
      */
     private void init() {
+
+        mLocations = new ArrayList<LatLng>();
+
         // 地图
         if (mAMap == null) {
             mAMap = mMapView.getMap();
@@ -142,28 +149,28 @@ public class MainActivity extends Activity implements LocationSource,
             @Override
             public void run() {
                 getData();
-                handler.postDelayed(this, 5000);
+                handler.postDelayed(this, FETCH_TIME_INTERVAL);
             }
         };
 
-        handler.postDelayed(runnable, 5000);
+        handler.postDelayed(runnable, FETCH_TIME_INTERVAL);
     }
 
-    private String amapLocationToString(AMapLocation location) {
-        StringBuffer locString = new StringBuffer();
-        locString.append(location.getLatitude()).append(",");
-        locString.append(location.getLongitude()).append(",");
-        locString.append(location.getProvider()).append(",");
-        locString.append(location.getTime()).append(",");
-        locString.append(location.getSpeed()).append(",");
-        locString.append(location.getBearing());
-        return locString.toString();
-    }
+    private void initRoadData() {
 
-    private void initpolyline() {
-        mPolyoptions = new PolylineOptions();
-        mPolyoptions.width(10f);
-        mPolyoptions.color(Color.BLUE);
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.setFlat(true);
+        markerOptions.anchor(0.5f, 0.5f);
+        markerOptions.icon(BitmapDescriptorFactory
+                .fromResource(R.drawable.shuttlebus));
+//        markerOptions.position(new LatLng(39.1489337022569, 117.301793619792));
+        mMarker = mAMap.addMarker(markerOptions);
+//        mMarker.setRotateAngle((float) getAngle(0));
+
+//        LatLngBounds.Builder builder=new LatLngBounds.Builder();
+//        builder.include(new LatLng(39.896049, 116.379792));
+//        builder.include(new LatLng(39.936049, 116.419792));
+//        mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(),10));
     }
 
     /**
@@ -214,12 +221,10 @@ public class MainActivity extends Activity implements LocationSource,
     protected void onDestroy() {
         super.onDestroy();
 
-
         try {
             mMapView.onDestroy();
             handler.removeCallbacks(runnable);// 关闭定时器处理
-        }
-        catch(RuntimeException e) {
+        } catch (RuntimeException e) {
             Log.e(TAG, "onDestroy: ", e);
         }
     }
@@ -262,21 +267,21 @@ public class MainActivity extends Activity implements LocationSource,
             //设置定位回调监听
             mLocationClient.setLocationListener(this);
             //初始化定位参数
-            mLocationOption = new AMapLocationClientOption();
+            AMapLocationClientOption locationOption = new AMapLocationClientOption();
             //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
-            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
             //设置是否返回地址信息（默认返回地址信息）
-            mLocationOption.setNeedAddress(true);
+            locationOption.setNeedAddress(true);
             //设置是否只定位一次,默认为false
-            mLocationOption.setOnceLocation(false);
+            locationOption.setOnceLocation(false);
             //设置是否强制刷新WIFI，默认为强制刷新
-            mLocationOption.setWifiActiveScan(true);
+            locationOption.setWifiActiveScan(true);
             //设置是否允许模拟位置,默认为false，不允许模拟位置
             //mLocationOption.setMockEnable(true);
             //设置定位间隔,单位毫秒,默认为2000ms
-            mLocationOption.setInterval(3000);
+            locationOption.setInterval(3000);
             //给定位客户端对象设置定位参数
-            mLocationClient.setLocationOption(mLocationOption);
+            mLocationClient.setLocationOption(locationOption);
             // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
             // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
             // 在定位结束后，在合适的生命周期调用onDestroy()方法
@@ -305,36 +310,68 @@ public class MainActivity extends Activity implements LocationSource,
             public void onResponse(Call<CoordinateGson> call, Response<CoordinateGson> response) {
                 //处理请求成功
 
-                if (mMarker != null) {
-                    mMarker.remove();
+                if (response.body().getData().size() == 0) {
+                    if (mMarker != null) {
+                        mMarker.setVisible(false);
+                    }
+                    Toast.makeText(getApplicationContext(), mSelectedBusLine.replace("Bus", "") + "号线 已被外星人劫持", Toast.LENGTH_SHORT).show();
+                    mLocations = new ArrayList<LatLng>();
                 }
 
-                List<Coordinate> coordinatesList = new ArrayList<Coordinate>();
+                //List<Coordinate> coordinatesList = new ArrayList<Coordinate>();
                 for (CoordinateGson.DataBean dataBean : response.body().getData()) {
 
                     // 设置当前地图显示为当前位置
                     LatLng latLng = new LatLng(Double.valueOf(dataBean.getLat()), Double.valueOf(dataBean.getLng()));
-                    mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                    MarkerOptions mMarkerOption = new MarkerOptions();
-                    mMarkerOption.position(latLng);
-                    mMarkerOption.title("班车");
-                    mMarkerOption.draggable(true);
-                    mMarkerOption.icon(
-                            BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                                    .decodeResource(getResources(),
-                                            R.drawable.marker)));
-                    // 将Marker设置为贴地显示，可以双指下拉看效果
-                    mMarkerOption.setFlat(true);
-                    mMarkerOption.visible(true);
 
-                    //mMarker.setPosition(latLng);
-                    mMarker = mAMap.addMarker(mMarkerOption);
+                    if (mLocations.size() > 1) {
+                        mLocations.remove(0);
+                    }
+
+                    mLocations.add(latLng);
+
+                    mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
+                    if (mMarker == null) {
+                        MarkerOptions mMarkerOption = new MarkerOptions();
+                        mMarkerOption.position(latLng);
+                        mMarkerOption.title("班车");
+                        mMarkerOption.draggable(true);
+                        mMarkerOption.anchor(0.5f, 0.5f);
+                        mMarkerOption.icon(
+                                BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                        .decodeResource(getResources(),
+                                                R.drawable.shuttlebus)));
+                        // 将Marker设置为贴地显示，可以双指下拉看效果
+                        mMarkerOption.setFlat(true);
+                        mMarkerOption.visible(true);
+
+                        //mMarker.setPosition(latLng);
+                        mMarker = mAMap.addMarker(mMarkerOption);
+                        mMarker.setRotateAngle(-90);
+                    } else {
+                        //mMarker.setPosition(latLng);
+                        mMarker.setVisible(true);
+                    }
+                }
+
+                if (mLocations.size() > 1) {
+                    if (mLocations.get(0).latitude == mLocations.get(1).latitude
+                            && mLocations.get(0).longitude == mLocations.get(1).longitude) {
+                    } else {
+                        // 距离
+                        //float distance = AMapUtils.calculateLineDistance(mLocations.get(1),mLocations.get(0));
+                        moveLooper();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<CoordinateGson> call, Throwable t) {
                 //处理请求失败
+                if (mMarker != null) {
+                    mMarker.remove();
+                }
                 Toast.makeText(getApplicationContext(), mSelectedBusLine + "位置获取失败", Toast.LENGTH_SHORT).show();
             }
         });
@@ -460,6 +497,154 @@ public class MainActivity extends Activity implements LocationSource,
         }
 
         return mUUID;
+    }
+
+
+    /**
+     * 根据点获取图标转的角度
+     */
+    private double getAngle(int startIndex) {
+
+        if ((startIndex + 1) > mLocations.size()) {
+            return 0;
+        }
+        LatLng startPoint = mLocations.get(startIndex);
+        LatLng endPoint = mLocations.get(startIndex + 1);
+        return getAngle(startPoint, endPoint);
+    }
+
+    /**
+     * 根据两点算取图标转的角度
+     */
+    private double getAngle(LatLng fromPoint, LatLng toPoint) {
+        double slope = getSlope(fromPoint, toPoint);
+        if (slope == Double.MAX_VALUE) {
+            if (toPoint.latitude > fromPoint.latitude) {
+                return 0;
+            } else {
+                return 180;
+            }
+        }
+        float deltAngle = 0;
+        if ((toPoint.latitude - fromPoint.latitude) * slope < 0) {
+            deltAngle = 180;
+        }
+        double radio = Math.atan(slope);
+        double angle = 180 * (radio / Math.PI) + deltAngle - 90;
+        return angle;
+    }
+
+    /**
+     * 根据点和斜率算取截距
+     */
+    private double getInterception(double slope, LatLng point) {
+
+        double interception = point.latitude - slope * point.longitude;
+        return interception;
+    }
+
+    /**
+     * 算斜率
+     */
+    private double getSlope(LatLng fromPoint, LatLng toPoint) {
+        if (toPoint.longitude == fromPoint.longitude) {
+            return Double.MAX_VALUE;
+        }
+        double slope = ((toPoint.latitude - fromPoint.latitude) / (toPoint.longitude - fromPoint.longitude));
+        return slope;
+    }
+
+    /**
+     * 计算每次移动的距离
+     */
+    private double getMoveDistance(double slope) {
+        if (slope == Double.MAX_VALUE || slope == 0) {
+            return DISTANCE;
+        }
+        return Math.abs((DISTANCE * slope) / Math.sqrt(1 + slope * slope));
+    }
+
+    /**
+     * 判断是否为反序
+     */
+    private boolean isReverse(LatLng startPoint, LatLng endPoint, double slope) {
+        if (slope == 0) {
+            return startPoint.longitude > endPoint.longitude;
+        }
+        return (startPoint.latitude > endPoint.latitude);
+
+    }
+
+    /**
+     * 获取循环初始值大小
+     */
+    private double getStart(LatLng startPoint, double slope) {
+        if (slope == 0) {
+            return startPoint.longitude;
+        }
+        return startPoint.latitude;
+    }
+
+    /**
+     * 获取循环结束大小
+     */
+    private double getEnd(LatLng endPoint, double slope) {
+        if (slope == 0) {
+            return endPoint.longitude;
+        }
+        return endPoint.latitude;
+    }
+
+    /**
+     * 循环进行移动逻辑
+     */
+    public void moveLooper() {
+//        new Thread() {
+//
+//            public void run() {
+//                while (mIsRunning) {
+//                    for (int i = 0; i < mLocations.size() - 1; i++) {
+
+        LatLng startPoint = mLocations.get(0);
+        LatLng endPoint = mLocations.get(1);
+        mMarker.setPosition(startPoint);
+        mMarker.setRotateAngle((float) getAngle(startPoint, endPoint));
+
+        double slope = getSlope(startPoint, endPoint);
+        boolean isReverse = isReverse(startPoint, endPoint, slope);
+        double moveDistance = isReverse ? getMoveDistance(slope) : -1 * getMoveDistance(slope);
+        double intercept = getInterception(slope, startPoint);
+
+        int m = 1;
+        for (double j = getStart(startPoint, slope); (j > getEnd(endPoint, slope)) == isReverse; j = j - moveDistance) {
+            m++;
+        }
+        long duration = FETCH_TIME_INTERVAL / m;
+
+        for (double j = getStart(startPoint, slope); (j > getEnd(endPoint, slope)) == isReverse; j = j - moveDistance) {
+            LatLng latLng = null;
+            if (slope == 0) {
+                latLng = new LatLng(startPoint.latitude, j);
+            } else if (slope == Double.MAX_VALUE) {
+                latLng = new LatLng(j, startPoint.longitude);
+            } else {
+
+                latLng = new LatLng(j, (j - intercept) / slope);
+            }
+            mMarker.setPosition(latLng);
+            try {
+                Thread.sleep(duration);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+//                        mIsRunning = false;
+//                    }
+//                }
+//            }
+//
+//        }.start();
     }
 
 }

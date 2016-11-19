@@ -19,16 +19,15 @@ android {
 }
 
 dependencies {
-    compile files('libs/AMap_3DMap_V4.0.1_20160923.jar')
-    compile files('libs/AMap_Location_V2.4.1_20160414.jar')
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.google.code.gson:gson:2.4'
-
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.squareup.retrofit2:retrofit-converters:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
+    compile files('libs/AMap_Location_V3.1.0_20161027.jar')
+    compile files('libs/Android_Map3D_SDK_V4.1.2_20161104.jar')
 }

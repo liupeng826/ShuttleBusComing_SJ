@@ -121,9 +121,9 @@
     <orderEntry type="library" exported="" name="support-annotations-24.1.0" level="project" />
     <orderEntry type="library" exported="" name="converter-scalars-2.1.0" level="project" />
     <orderEntry type="library" exported="" name="okhttp-3.3.0" level="project" />
-    <orderEntry type="library" exported="" name="AMap_3DMap_V4.0.1_20160923" level="project" />
     <orderEntry type="library" exported="" name="butterknife-annotations-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-8.4.0" level="project" />
-    <orderEntry type="library" exported="" name="AMap_Location_V2.4.1_20160414" level="project" />
+    <orderEntry type="library" exported="" name="AMap_Location_V3.1.0_20161027" level="project" />
+    <orderEntry type="library" exported="" name="Android_Map3D_SDK_V4.1.2_20161104" level="project" />
   </component>
 </module>
