@@ -59,6 +59,7 @@ public class MainActivity extends Activity implements LocationSource,
     private Marker mMarker;
     private List<LatLng> mLocations;
     private String mSelectedBusLine;
+    private boolean mSelectedBusLineChanged = false;
 
     // 通过设置间隔时间和距离可以控制速度和图标移动的距离
     private static final double DISTANCE = 0.0001;
@@ -90,7 +91,6 @@ public class MainActivity extends Activity implements LocationSource,
     private void init() {
 
         mLocations = new ArrayList<LatLng>();
-
         // 地图
         if (mAMap == null) {
             mAMap = mMapView.getMap();
@@ -119,6 +119,9 @@ public class MainActivity extends Activity implements LocationSource,
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int pos, long id) {
+
+                mSelectedBusLineChanged = true;
+                mLocations = new ArrayList<LatLng>();
                 String[] lines = getResources().getStringArray(R.array.lines);
 
                 // 存储选择数据
@@ -330,8 +333,6 @@ public class MainActivity extends Activity implements LocationSource,
 
                     mLocations.add(latLng);
 
-                    mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-
                     if (mMarker == null) {
                         MarkerOptions mMarkerOption = new MarkerOptions();
                         mMarkerOption.position(latLng);
@@ -341,17 +342,24 @@ public class MainActivity extends Activity implements LocationSource,
                         mMarkerOption.icon(
                                 BitmapDescriptorFactory.fromBitmap(BitmapFactory
                                         .decodeResource(getResources(),
-                                                R.drawable.shuttlebus)));
+                                                R.drawable.navi_marker)));
                         // 将Marker设置为贴地显示，可以双指下拉看效果
                         mMarkerOption.setFlat(true);
                         mMarkerOption.visible(true);
 
                         //mMarker.setPosition(latLng);
                         mMarker = mAMap.addMarker(mMarkerOption);
-                        mMarker.setRotateAngle(-90);
+                        //mMarker.setRotateAngle(-90);
                     } else {
                         //mMarker.setPosition(latLng);
                         mMarker.setVisible(true);
+                    }
+
+                    if (mSelectedBusLineChanged) {
+                        mMarker.setRotateAngle(0);
+                        mMarker.setPosition(latLng);
+                        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+                        mSelectedBusLineChanged = false;
                     }
                 }
 
@@ -632,6 +640,7 @@ public class MainActivity extends Activity implements LocationSource,
                 latLng = new LatLng(j, (j - intercept) / slope);
             }
             mMarker.setPosition(latLng);
+            mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
             try {
                 Thread.sleep(duration);
             } catch (InterruptedException e) {
