@@ -33,18 +33,29 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class drawable {
         public static final int back_btn_image=0x7f020000;
-        public static final int gps=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int marker=0x7f020003;
-        public static final int navi_marker=0x7f020004;
-        public static final int point5=0x7f020005;
-        public static final int shuttlebus=0x7f020006;
-        public static final int title_background=0x7f020007;
-        public static final int walk=0x7f020008;
+        public static final int car_ic_map_icon_scar=0x7f020001;
+        public static final int gps=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int location=0x7f020004;
+        public static final int map_icon_bus=0x7f020005;
+        public static final int map_icon_driver_car=0x7f020006;
+        public static final int map_icon_fast=0x7f020007;
+        public static final int map_icon_luxury=0x7f020008;
+        public static final int map_icon_tailwind=0x7f020009;
+        public static final int map_icon_taxi=0x7f02000a;
+        public static final int marker=0x7f02000b;
+        public static final int navi_marker=0x7f02000c;
+        public static final int point5=0x7f02000d;
+        public static final int shuttlebus=0x7f02000e;
+        public static final int title_background=0x7f02000f;
+        public static final int traffic_off=0x7f020010;
+        public static final int traffic_on=0x7f020011;
+        public static final int walk=0x7f020012;
     }
     public static final class id {
         public static final int map=0x7f090000;
         public static final int spinner=0x7f090001;
+        public static final int traffic_btn=0x7f090002;
     }
     public static final class layout {
         public static final int basicmap_activity=0x7f030000;

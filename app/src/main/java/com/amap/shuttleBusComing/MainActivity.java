@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class MainActivity extends Activity implements LocationSource,
     private Handler handler;
     private Runnable runnable;
     private Marker mMarker;
+    private Marker mLocationMarker;
     private List<LatLng> mLocations;
     private String mSelectedBusLine;
     private boolean mSelectedBusLineChanged = false;
@@ -143,6 +145,39 @@ public class MainActivity extends Activity implements LocationSource,
                 // Another interface callback
             }
         });
+
+
+        // 初始化路况控件
+        final CheckBox mTraffic = (CheckBox) findViewById(R.id.traffic_btn);
+        //路况图层触发事件
+        mTraffic.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //判断路况图层是否显示
+                if (mTraffic.isChecked()) {
+                    // 显示实时交通状况
+                    mAMap.setTrafficEnabled(true);
+                    mTraffic.setButtonDrawable(getResources().getDrawable(R.drawable.traffic_on));
+                } else {
+                    mAMap.setTrafficEnabled(false);
+                    mTraffic.setButtonDrawable(getResources().getDrawable(R.drawable.traffic_off));
+                }
+            }
+        });
+
+//        // 初始化路况控件
+//        final Button mLocation = (Button) findViewById(R.id.locationImageButton);
+//        //路况图层触发事件
+//        mLocation.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                if (mLocationClient != null) {
+//                    mLocationClient.startLocation();
+//                }
+//            }
+//        });
     }
 
     private void getDataTask() {
@@ -165,7 +200,7 @@ public class MainActivity extends Activity implements LocationSource,
         markerOptions.setFlat(true);
         markerOptions.anchor(0.5f, 0.5f);
         markerOptions.icon(BitmapDescriptorFactory
-                .fromResource(R.drawable.shuttlebus));
+                .fromResource(R.drawable.map_icon_driver_car));
 //        markerOptions.position(new LatLng(39.1489337022569, 117.301793619792));
         mMarker = mAMap.addMarker(markerOptions);
 //        mMarker.setRotateAngle((float) getAngle(0));
@@ -255,7 +290,18 @@ public class MainActivity extends Activity implements LocationSource,
             mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
             LatLng mylocation = new LatLng(amapLocation.getLatitude(),
                     amapLocation.getLongitude());
+//            //添加Marker显示定位位置
+//            if (mLocationMarker == null) {
+//                //如果是空的添加一个新的,icon方法就是设置定位图标，可以自定义
+//                mLocationMarker = mAMap.addMarker(new MarkerOptions()
+//                        .position(mylocation)
+//                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+//            } else {
+//                //已经添加过了，修改位置即可m
+//                mLocationMarker.setPosition(mylocation);
+//            }
             //mAMap.moveCamera(CameraUpdateFactory.changeLatLng(mylocation));
+
             // 上传定位信息
             if (amapLocation.getAccuracy() < 80.0) {
                 postLocation(mylocation);
@@ -280,7 +326,7 @@ public class MainActivity extends Activity implements LocationSource,
             //设置是否强制刷新WIFI，默认为强制刷新
             locationOption.setWifiActiveScan(true);
             //设置是否允许模拟位置,默认为false，不允许模拟位置
-            //mLocationOption.setMockEnable(true);
+            //locationOption.setMockEnable(true);
             //设置定位间隔,单位毫秒,默认为2000ms
             locationOption.setInterval(3000);
             //给定位客户端对象设置定位参数
@@ -342,7 +388,7 @@ public class MainActivity extends Activity implements LocationSource,
                         mMarkerOption.icon(
                                 BitmapDescriptorFactory.fromBitmap(BitmapFactory
                                         .decodeResource(getResources(),
-                                                R.drawable.navi_marker)));
+                                                R.drawable.map_icon_driver_car)));
                         // 将Marker设置为贴地显示，可以双指下拉看效果
                         mMarkerOption.setFlat(true);
                         mMarkerOption.visible(true);
@@ -607,53 +653,46 @@ public class MainActivity extends Activity implements LocationSource,
      * 循环进行移动逻辑
      */
     public void moveLooper() {
-//        new Thread() {
-//
-//            public void run() {
-//                while (mIsRunning) {
-//                    for (int i = 0; i < mLocations.size() - 1; i++) {
+        new Thread() {
 
-        LatLng startPoint = mLocations.get(0);
-        LatLng endPoint = mLocations.get(1);
-        mMarker.setPosition(startPoint);
-        mMarker.setRotateAngle((float) getAngle(startPoint, endPoint));
+            public void run() {
+                LatLng startPoint = mLocations.get(0);
+                LatLng endPoint = mLocations.get(1);
+                mMarker.setPosition(startPoint);
+                mMarker.setRotateAngle((float) getAngle(startPoint, endPoint));
 
-        double slope = getSlope(startPoint, endPoint);
-        boolean isReverse = isReverse(startPoint, endPoint, slope);
-        double moveDistance = isReverse ? getMoveDistance(slope) : -1 * getMoveDistance(slope);
-        double intercept = getInterception(slope, startPoint);
+                double slope = getSlope(startPoint, endPoint);
+                boolean isReverse = isReverse(startPoint, endPoint, slope);
+                double moveDistance = isReverse ? getMoveDistance(slope) : -1 * getMoveDistance(slope);
+                double intercept = getInterception(slope, startPoint);
 
-        int m = 1;
-        for (double j = getStart(startPoint, slope); (j > getEnd(endPoint, slope)) == isReverse; j = j - moveDistance) {
-            m++;
-        }
-        long duration = FETCH_TIME_INTERVAL / m;
+                int m = 1;
+                for (double j = getStart(startPoint, slope); (j > getEnd(endPoint, slope)) == isReverse; j = j - moveDistance) {
+                    m++;
+                }
+                long duration = FETCH_TIME_INTERVAL / m;
 
-        for (double j = getStart(startPoint, slope); (j > getEnd(endPoint, slope)) == isReverse; j = j - moveDistance) {
-            LatLng latLng = null;
-            if (slope == 0) {
-                latLng = new LatLng(startPoint.latitude, j);
-            } else if (slope == Double.MAX_VALUE) {
-                latLng = new LatLng(j, startPoint.longitude);
-            } else {
+                for (double j = getStart(startPoint, slope); (j > getEnd(endPoint, slope)) == isReverse; j = j - moveDistance) {
+                    LatLng latLng = null;
+                    if (slope == 0) {
+                        latLng = new LatLng(startPoint.latitude, j);
+                    } else if (slope == Double.MAX_VALUE) {
+                        latLng = new LatLng(j, startPoint.longitude);
+                    } else {
 
-                latLng = new LatLng(j, (j - intercept) / slope);
+                        latLng = new LatLng(j, (j - intercept) / slope);
+                    }
+                    mMarker.setPosition(latLng);
+                    mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+                    try {
+                        Thread.sleep(duration);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-            mMarker.setPosition(latLng);
-            mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
-            try {
-                Thread.sleep(duration);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
 
-//                        mIsRunning = false;
-//                    }
-//                }
-//            }
-//
-//        }.start();
+        }.start();
     }
 
 }
