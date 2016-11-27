@@ -5,36 +5,45 @@ package com.amap.util;
  */
 
 public class Coordinate {
-    private String id;
-    private String user;
-    private String role;
+    /**
+     * id : 6
+     * uuid : 03002B56-8578-4B70-9582-E6BB5B6B7378
+     * lat : 39.1499449327257
+     * lng : 117.40011311849
+     * createdTime : 2016-11-01 13:06:45
+     * updateTime : 2016-11-25 13:05:13
+     */
+
+    private long id;
+    private String uuid;
+    private int roleId;
     private String lat;
     private String lng;
     private String createdTime;
     private String updateTime;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
-    public String getRole() {
-        return role;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     public String getLat() {

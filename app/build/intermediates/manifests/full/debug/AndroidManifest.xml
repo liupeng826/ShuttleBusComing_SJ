@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.liupeng.shuttleBusComing"
+    package="com.liupeng.shuttleBusComingsj"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="2.1.2" >
 
     <uses-sdk
         android:minSdkVersion="15"
         android:targetSdkVersion="25" />
 
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -29,10 +30,10 @@
         android:theme="@android:style/Theme.Holo.Light" >
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="2669c3213d6f6b3999650f920e85533c" >
+            android:value="8e0ab65f289a4c7f24801c743bf65bb1" >
         </meta-data>
 
-        <activity android:name="com.amap.shuttleBusComing.MainActivity" >
+        <activity android:name="com.amap.shuttleBusComingsj.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

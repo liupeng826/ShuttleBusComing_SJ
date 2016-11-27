@@ -33,26 +33,47 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class drawable {
         public static final int back_btn_image=0x7f020000;
-        public static final int car_ic_map_icon_scar=0x7f020001;
-        public static final int gps=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int location=0x7f020004;
-        public static final int map_icon_bus=0x7f020005;
-        public static final int map_icon_driver_car=0x7f020006;
-        public static final int map_icon_fast=0x7f020007;
-        public static final int map_icon_luxury=0x7f020008;
-        public static final int map_icon_tailwind=0x7f020009;
-        public static final int map_icon_taxi=0x7f02000a;
-        public static final int marker=0x7f02000b;
-        public static final int navi_marker=0x7f02000c;
-        public static final int point5=0x7f02000d;
-        public static final int shuttlebus=0x7f02000e;
-        public static final int title_background=0x7f02000f;
-        public static final int traffic_off=0x7f020010;
-        public static final int traffic_on=0x7f020011;
-        public static final int walk=0x7f020012;
+        public static final int downarrow=0x7f020001;
+        public static final int drawer_shadow=0x7f020002;
+        public static final int driver=0x7f020003;
+        public static final int driver_off=0x7f020004;
+        public static final int driver_on=0x7f020005;
+        public static final int gps=0x7f020006;
+        public static final int ic_drawer=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int location=0x7f020009;
+        public static final int love=0x7f02000a;
+        public static final int map_icon_bus=0x7f02000b;
+        public static final int map_icon_driver_car=0x7f02000c;
+        public static final int map_icon_fast=0x7f02000d;
+        public static final int map_icon_luxury=0x7f02000e;
+        public static final int map_icon_tailwind=0x7f02000f;
+        public static final int map_icon_taxi=0x7f020010;
+        public static final int marker=0x7f020011;
+        public static final int navi_marker=0x7f020012;
+        public static final int offline_back=0x7f020013;
+        public static final int offline_common_bar_bg=0x7f020014;
+        public static final int offline_common_title_btn_selector=0x7f020015;
+        public static final int offlinearrow_but_normal=0x7f020016;
+        public static final int offlinearrow_but_pressed=0x7f020017;
+        public static final int offlinearrow_down=0x7f020018;
+        public static final int offlinearrow_download=0x7f020019;
+        public static final int offlinearrow_start=0x7f02001a;
+        public static final int offlinearrow_stop=0x7f02001b;
+        public static final int offlinearrow_tab1_normal=0x7f02001c;
+        public static final int offlinearrow_tab1_pressed=0x7f02001d;
+        public static final int offlinearrow_tab2_normal=0x7f02001e;
+        public static final int offlinearrow_tab2_pressed=0x7f02001f;
+        public static final int point5=0x7f020020;
+        public static final int rightarrow=0x7f020021;
+        public static final int shuttlebus=0x7f020022;
+        public static final int title_background=0x7f020023;
+        public static final int traffic_off=0x7f020024;
+        public static final int traffic_on=0x7f020025;
+        public static final int walk=0x7f020026;
     }
     public static final class id {
+        public static final int driver_btn=0x7f090003;
         public static final int map=0x7f090000;
         public static final int spinner=0x7f090001;
         public static final int traffic_btn=0x7f090002;
@@ -79,8 +100,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #ButtonBarContainerTheme_metaButtonBarButtonStyle com.liupeng.shuttleBusComing:metaButtonBarButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #ButtonBarContainerTheme_metaButtonBarStyle com.liupeng.shuttleBusComing:metaButtonBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ButtonBarContainerTheme_metaButtonBarButtonStyle com.liupeng.shuttleBusComingsj:metaButtonBarButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ButtonBarContainerTheme_metaButtonBarStyle com.liupeng.shuttleBusComingsj:metaButtonBarStyle}</code></td><td></td></tr>
            </table>
            @see #ButtonBarContainerTheme_metaButtonBarButtonStyle
            @see #ButtonBarContainerTheme_metaButtonBarStyle
@@ -89,23 +110,23 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x7f010000, 0x7f010001
         };
         /**
-          <p>This symbol is the offset where the {@link com.liupeng.shuttleBusComing.R.attr#metaButtonBarButtonStyle}
+          <p>This symbol is the offset where the {@link com.liupeng.shuttleBusComingsj.R.attr#metaButtonBarButtonStyle}
           attribute's value can be found in the {@link #ButtonBarContainerTheme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.liupeng.shuttleBusComing:metaButtonBarButtonStyle
+          @attr name com.liupeng.shuttleBusComingsj:metaButtonBarButtonStyle
         */
         public static final int ButtonBarContainerTheme_metaButtonBarButtonStyle = 1;
         /**
-          <p>This symbol is the offset where the {@link com.liupeng.shuttleBusComing.R.attr#metaButtonBarStyle}
+          <p>This symbol is the offset where the {@link com.liupeng.shuttleBusComingsj.R.attr#metaButtonBarStyle}
           attribute's value can be found in the {@link #ButtonBarContainerTheme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.liupeng.shuttleBusComing:metaButtonBarStyle
+          @attr name com.liupeng.shuttleBusComingsj:metaButtonBarStyle
         */
         public static final int ButtonBarContainerTheme_metaButtonBarStyle = 0;
     };

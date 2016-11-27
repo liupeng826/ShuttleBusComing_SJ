@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 
 public interface ApiService {
     @GET("api/coordinate/")
-    Call<CoordinateGson> getCoordinateData(@Query("role") String role);
+    Call<CoordinateGson> getCoordinateData(@Query("roleId") long roleId);
 
     @POST("api/coordinate")
     Call<Coordinate> updateCoordinate(@Body Coordinate coordinate);

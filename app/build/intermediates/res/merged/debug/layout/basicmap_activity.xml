@@ -32,6 +32,15 @@
         android:layout_height="40dp"
         android:button="@drawable/traffic_off" />
 
+    <CheckBox
+        android:id="@+id/driver_btn"
+        android:layout_marginRight="360dp"
+        android:layout_marginTop="550dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:button="@drawable/driver_off" />
+
     <!--<Button-->
         <!--android:src="@drawable/location"-->
         <!--android:layout_width="wrap_content"-->
