@@ -1,6 +1,30 @@
 [
     {
+        "merged": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/build/intermediates/res/merged/debug/layout/offline_downloaded_list.xml",
+        "source": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/layout/offline_downloaded_list.xml"
+    },
+    {
+        "merged": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/build/intermediates/res/merged/debug/layout/offline_map_layout.xml",
+        "source": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/layout/offline_map_layout.xml"
+    },
+    {
+        "merged": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/build/intermediates/res/merged/debug/layout/offline_province_listview.xml",
+        "source": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/layout/offline_province_listview.xml"
+    },
+    {
+        "merged": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/build/intermediates/res/merged/debug/layout/offlinemap_group.xml",
+        "source": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/layout/offlinemap_group.xml"
+    },
+    {
         "merged": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/build/intermediates/res/merged/debug/layout/basicmap_activity.xml",
         "source": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/layout/basicmap_activity.xml"
+    },
+    {
+        "merged": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/build/intermediates/res/merged/debug/layout/offlinemap_child.xml",
+        "source": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/layout/offlinemap_child.xml"
+    },
+    {
+        "merged": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/build/intermediates/res/merged/debug/layout/offlinemap_activity.xml",
+        "source": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/layout/offlinemap_activity.xml"
     }
 ]

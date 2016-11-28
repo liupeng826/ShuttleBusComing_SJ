@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.liupeng.shuttleBusComing"
+    package="com.liupeng.shuttleBusComingsj"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -32,13 +32,16 @@
             android:value="8e0ab65f289a4c7f24801c743bf65bb1">
         </meta-data>
 
-        <activity android:name="com.amap.shuttleBusComingsj.MainActivity">
+        <activity android:name="com.liupeng.shuttleBusComingsj.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.liupeng.offlinemap.OfflineMapActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name="com.amap.api.location.APSService" />
     </application>
