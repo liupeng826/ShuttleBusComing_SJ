@@ -22,10 +22,33 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int metaButtonBarStyle=0x7f010000;
     }
     public static final class color {
-        public static final int black_overlay=0x7f050000;
-        public static final int colorAccent=0x7f050001;
-        public static final int colorPrimary=0x7f050002;
-        public static final int colorPrimaryDark=0x7f050003;
+        public static final int act_background=0x7f050000;
+        public static final int black=0x7f050001;
+        public static final int black_overlay=0x7f050002;
+        public static final int blue=0x7f050003;
+        public static final int colorAccent=0x7f050004;
+        public static final int colorPrimary=0x7f050005;
+        public static final int colorPrimaryDark=0x7f050006;
+        public static final int darkgrey=0x7f050007;
+        public static final int f850_default_blue=0x7f050008;
+        public static final int gary=0x7f050009;
+        public static final int gray_lite=0x7f05000a;
+        public static final int grey=0x7f05000b;
+        public static final int header_toast=0x7f05000c;
+        public static final int header_toast_bg=0x7f05000d;
+        public static final int header_toast_line=0x7f05000e;
+        public static final int itemlist=0x7f05000f;
+        public static final int offline_down_size=0x7f050010;
+        public static final int offline_down_title=0x7f050011;
+        public static final int offline_head_font=0x7f050012;
+        public static final int phone_bg=0x7f050013;
+        public static final int progress_background=0x7f050014;
+        public static final int red=0x7f050015;
+        public static final int taobao_black=0x7f050016;
+        public static final int translucent=0x7f050017;
+        public static final int transparent=0x7f050018;
+        public static final int white=0x7f050019;
+        public static final int yellow=0x7f05001a;
     }
     public static final class dimen {
         public static final int activity_horizontal_margin=0x7f060000;
@@ -70,13 +93,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int title_background=0x7f020023;
         public static final int traffic_off=0x7f020024;
         public static final int traffic_on=0x7f020025;
+        public static final int transparent=0x7f020027;
         public static final int walk=0x7f020026;
     }
     public static final class id {
         public static final int driver_btn=0x7f090003;
         public static final int map=0x7f090000;
-        public static final int spinner=0x7f090001;
-        public static final int traffic_btn=0x7f090002;
+        public static final int spinner=0x7f090002;
+        public static final int traffic_btn=0x7f090001;
     }
     public static final class layout {
         public static final int basicmap_activity=0x7f030000;

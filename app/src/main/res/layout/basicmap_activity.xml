@@ -10,6 +10,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 
+    <!--路况图层控制按钮-->
+    <CheckBox
+        android:id="@+id/traffic_btn"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="80dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:button="@drawable/traffic_off" />
+
+    <!--班车线路控制按钮-->
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,24 +34,16 @@
         android:background="@android:color/white"
         android:popupBackground="@android:color/white"/>
 
-    <!--路况图层控制按钮-->
-    <CheckBox
-        android:id="@+id/traffic_btn"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="80dp"
-        android:layout_alignParentRight="true"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:button="@drawable/traffic_off" />
-
+    <!--司机控制按钮-->
     <CheckBox
         android:id="@+id/driver_btn"
-        android:layout_marginRight="360dp"
-        android:layout_marginTop="550dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="4dp"
+        android:layout_marginBottom="40dp"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:button="@drawable/driver_off" />
+        android:button="@drawable/driver_off"/>
 
     <!--<Button-->
         <!--android:src="@drawable/location"-->

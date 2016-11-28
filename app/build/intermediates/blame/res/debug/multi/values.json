@@ -28,8 +28,46 @@
                     "startLine": 13,
                     "startColumn": 4,
                     "startOffset": 333,
+                    "endColumn": 48,
+                    "endOffset": 377
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 32,
+                        "startColumn": 4,
+                        "startOffset": 1226,
+                        "endColumn": 48,
+                        "endOffset": 1270
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 382,
+                    "endColumn": 40,
+                    "endOffset": 418
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 291,
+                        "endColumn": 40,
+                        "endOffset": 327
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 423,
                     "endColumn": 49,
-                    "endOffset": 378
+                    "endOffset": 468
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
@@ -44,11 +82,30 @@
             },
             {
                 "to": {
-                    "startLine": 14,
+                    "startLine": 16,
                     "startColumn": 4,
-                    "startOffset": 383,
+                    "startOffset": 473,
+                    "endColumn": 38,
+                    "endOffset": 507
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 30,
+                        "startColumn": 4,
+                        "startOffset": 1144,
+                        "endColumn": 38,
+                        "endOffset": 1178
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 17,
+                    "startColumn": 4,
+                    "startOffset": 512,
                     "endColumn": 45,
-                    "endOffset": 424
+                    "endOffset": 553
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
@@ -63,11 +120,11 @@
             },
             {
                 "to": {
-                    "startLine": 15,
+                    "startLine": 18,
                     "startColumn": 4,
-                    "startOffset": 429,
+                    "startOffset": 558,
                     "endColumn": 46,
-                    "endOffset": 471
+                    "endOffset": 600
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
@@ -82,11 +139,11 @@
             },
             {
                 "to": {
-                    "startLine": 16,
+                    "startLine": 19,
                     "startColumn": 4,
-                    "startOffset": 476,
+                    "startOffset": 605,
                     "endColumn": 50,
-                    "endOffset": 522
+                    "endOffset": 651
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
@@ -101,11 +158,391 @@
             },
             {
                 "to": {
-                    "startLine": 18,
+                    "startLine": 20,
                     "startColumn": 4,
-                    "startOffset": 712,
+                    "startOffset": 656,
+                    "endColumn": 43,
+                    "endOffset": 695
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 332,
+                        "endColumn": 43,
+                        "endOffset": 371
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 21,
+                    "startColumn": 4,
+                    "startOffset": 700,
+                    "endColumn": 51,
+                    "endOffset": 747
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 497,
+                        "endColumn": 51,
+                        "endOffset": 544
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 22,
+                    "startColumn": 4,
+                    "startOffset": 752,
+                    "endColumn": 38,
+                    "endOffset": 786
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 25,
+                        "startColumn": 4,
+                        "startOffset": 908,
+                        "endColumn": 38,
+                        "endOffset": 942
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 23,
+                    "startColumn": 4,
+                    "startOffset": 791,
+                    "endColumn": 43,
+                    "endOffset": 830
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 28,
+                        "startColumn": 4,
+                        "startOffset": 1046,
+                        "endColumn": 43,
+                        "endOffset": 1085
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 24,
+                    "startColumn": 4,
+                    "startOffset": 835,
+                    "endColumn": 39,
+                    "endOffset": 870
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 251,
+                        "endColumn": 39,
+                        "endOffset": 286
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 25,
+                    "startColumn": 4,
+                    "startOffset": 875,
+                    "endColumn": 46,
+                    "endOffset": 917
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 21,
+                        "startColumn": 4,
+                        "startOffset": 704,
+                        "endColumn": 46,
+                        "endOffset": 746
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 26,
+                    "startColumn": 4,
+                    "startOffset": 922,
+                    "endColumn": 49,
+                    "endOffset": 967
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 20,
+                        "startColumn": 4,
+                        "startOffset": 654,
+                        "endColumn": 49,
+                        "endOffset": 699
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 27,
+                    "startColumn": 4,
+                    "startOffset": 972,
+                    "endColumn": 51,
+                    "endOffset": 1019
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 22,
+                        "startColumn": 4,
+                        "startOffset": 751,
+                        "endColumn": 51,
+                        "endOffset": 798
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 28,
+                    "startColumn": 4,
+                    "startOffset": 1024,
+                    "endColumn": 42,
+                    "endOffset": 1062
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 31,
+                        "startColumn": 4,
+                        "startOffset": 1183,
+                        "endColumn": 42,
+                        "endOffset": 1221
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 29,
+                    "startColumn": 4,
+                    "startOffset": 1067,
+                    "endColumn": 51,
+                    "endOffset": 1114
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 27,
+                        "startColumn": 4,
+                        "startOffset": 994,
+                        "endColumn": 51,
+                        "endOffset": 1041
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 30,
+                    "startColumn": 4,
+                    "startOffset": 1119,
+                    "endColumn": 52,
+                    "endOffset": 1167
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 23,
+                        "startColumn": 4,
+                        "startOffset": 803,
+                        "endColumn": 52,
+                        "endOffset": 851
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 31,
+                    "startColumn": 4,
+                    "startOffset": 1172,
+                    "endColumn": 51,
+                    "endOffset": 1219
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 24,
+                        "startColumn": 4,
+                        "startOffset": 856,
+                        "endColumn": 51,
+                        "endOffset": 903
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 32,
+                    "startColumn": 4,
+                    "startOffset": 1224,
+                    "endColumn": 42,
+                    "endOffset": 1262
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 33,
+                        "startColumn": 4,
+                        "startOffset": 1275,
+                        "endColumn": 42,
+                        "endOffset": 1313
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 33,
+                    "startColumn": 4,
+                    "startOffset": 1267,
+                    "endColumn": 53,
+                    "endOffset": 1316
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 29,
+                        "startColumn": 4,
+                        "startOffset": 1090,
+                        "endColumn": 53,
+                        "endOffset": 1139
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 34,
+                    "startColumn": 4,
+                    "startOffset": 1321,
+                    "endColumn": 38,
+                    "endOffset": 1355
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 417,
+                        "endColumn": 38,
+                        "endOffset": 451
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 35,
+                    "startColumn": 4,
+                    "startOffset": 1360,
+                    "endColumn": 46,
+                    "endOffset": 1402
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 26,
+                        "startColumn": 4,
+                        "startOffset": 947,
+                        "endColumn": 46,
+                        "endOffset": 989
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 36,
+                    "startColumn": 4,
+                    "startOffset": 1407,
+                    "endColumn": 47,
+                    "endOffset": 1450
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 34,
+                        "startColumn": 4,
+                        "startOffset": 1318,
+                        "endColumn": 47,
+                        "endOffset": 1361
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 37,
+                    "startColumn": 4,
+                    "startOffset": 1455,
+                    "endColumn": 47,
+                    "endOffset": 1498
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 4,
+                        "startOffset": 604,
+                        "endColumn": 47,
+                        "endOffset": 647
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 38,
+                    "startColumn": 4,
+                    "startOffset": 1503,
+                    "endColumn": 40,
+                    "endOffset": 1539
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 376,
+                        "endColumn": 40,
+                        "endOffset": 412
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 39,
+                    "startColumn": 4,
+                    "startOffset": 1544,
+                    "endColumn": 40,
+                    "endOffset": 1580
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 456,
+                        "endColumn": 40,
+                        "endOffset": 492
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 41,
+                    "startColumn": 4,
+                    "startOffset": 1770,
                     "endColumn": 57,
-                    "endOffset": 765
+                    "endOffset": 1823
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/dimens.xml",
@@ -120,11 +557,11 @@
             },
             {
                 "to": {
-                    "startLine": 19,
+                    "startLine": 42,
                     "startColumn": 4,
-                    "startOffset": 770,
+                    "startOffset": 1828,
                     "endColumn": 55,
-                    "endOffset": 821
+                    "endOffset": 1879
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/dimens.xml",
@@ -139,11 +576,30 @@
             },
             {
                 "to": {
-                    "startLine": 20,
+                    "startLine": 43,
                     "startColumn": 4,
-                    "startOffset": 826,
+                    "startOffset": 1884,
+                    "endColumn": 53,
+                    "endOffset": 1933
+                },
+                "from": {
+                    "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 550,
+                        "endColumn": 53,
+                        "endOffset": 599
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 44,
+                    "startColumn": 4,
+                    "startOffset": 1938,
                     "endColumn": 52,
-                    "endOffset": 874
+                    "endOffset": 1986
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/strings.xml",
@@ -158,11 +614,11 @@
             },
             {
                 "to": {
-                    "startLine": 21,
+                    "startLine": 45,
                     "startColumn": 4,
-                    "startOffset": 879,
+                    "startOffset": 1991,
                     "endColumn": 41,
-                    "endOffset": 916
+                    "endOffset": 2028
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/strings.xml",
@@ -177,11 +633,11 @@
             },
             {
                 "to": {
-                    "startLine": 22,
+                    "startLine": 46,
                     "startColumn": 4,
-                    "startOffset": 921,
+                    "startOffset": 2033,
                     "endColumn": 53,
-                    "endOffset": 970
+                    "endOffset": 2082
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/strings.xml",
@@ -196,11 +652,11 @@
             },
             {
                 "to": {
-                    "startLine": 23,
+                    "startLine": 47,
                     "startColumn": 4,
-                    "startOffset": 975,
+                    "startOffset": 2087,
                     "endColumn": 56,
-                    "endOffset": 1027
+                    "endOffset": 2139
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/strings.xml",
@@ -215,11 +671,11 @@
             },
             {
                 "to": {
-                    "startLine": 24,
+                    "startLine": 48,
                     "startColumn": 4,
-                    "startOffset": 1032,
+                    "startOffset": 2144,
                     "endColumn": 52,
-                    "endOffset": 1080
+                    "endOffset": 2192
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/strings.xml",
@@ -234,11 +690,11 @@
             },
             {
                 "to": {
-                    "startLine": 25,
+                    "startLine": 49,
                     "startColumn": 4,
-                    "startOffset": 1085,
+                    "startOffset": 2197,
                     "endColumn": 72,
-                    "endOffset": 1153
+                    "endOffset": 2265
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/strings.xml",
@@ -253,12 +709,12 @@
             },
             {
                 "to": {
-                    "startLine": 26,
+                    "startLine": 50,
                     "startColumn": 4,
-                    "startOffset": 1158,
-                    "endLine": 28,
+                    "startOffset": 2270,
+                    "endLine": 52,
                     "endColumn": 12,
-                    "endOffset": 1317
+                    "endOffset": 2429
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/styles.xml",
@@ -274,12 +730,12 @@
             },
             {
                 "to": {
-                    "startLine": 29,
+                    "startLine": 53,
                     "startColumn": 4,
-                    "startOffset": 1322,
-                    "endLine": 35,
+                    "startOffset": 2434,
+                    "endLine": 59,
                     "endColumn": 12,
-                    "endOffset": 1771
+                    "endOffset": 2883
                 },
                 "from": {
                     "file": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/values/styles.xml",
