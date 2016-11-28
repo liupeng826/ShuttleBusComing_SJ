@@ -240,7 +240,7 @@ public class MainActivity extends Activity implements LocationSource,
         }
 
         // 初始化离线地图
-        final Button mDownload = (Button) findViewById(R.id.button);
+        final Button mDownload = (Button) findViewById(R.id.meBtn);
         //路况图层触发事件
         mDownload.setOnClickListener(new View.OnClickListener() {
 

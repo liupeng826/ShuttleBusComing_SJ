@@ -9,6 +9,11 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
+    <string name="map">"地图"</string>
+    <string name="bus">"班车"</string>
+    <string name="me">"我"</string>
+
+
     <!-- offlinemap -->
     <string name="beijing">"北京"</string>
     <string name="start">"开始"</string>
