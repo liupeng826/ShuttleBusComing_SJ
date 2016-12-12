@@ -17,4 +17,8 @@ public interface ApiService {
 
     @POST("api/coordinate")
     Call<Coordinate> updateCoordinate(@Body Coordinate coordinate);
+
+    //http://180.76.169.196:8000/api/coordinate/station?line=6
+    @GET("api/coordinate/station")
+    Call<StationGson> getStations(@Query("line") long roleId);
 }

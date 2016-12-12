@@ -26,6 +26,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
@@ -37,6 +38,8 @@ import com.liupeng.offlinemap.OfflineMapActivity;
 import com.liupeng.util.ApiService;
 import com.liupeng.util.Coordinate;
 import com.liupeng.util.CoordinateGson;
+import com.liupeng.util.Station;
+import com.liupeng.util.StationGson;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -64,6 +67,7 @@ public class MainActivity extends Activity implements LocationSource,
     private Handler handler;
     private Runnable runnable;
     private List<LatLng> mLocations;
+	private List<Station> mStationList;
     private String mSelectedBusLine;
     private int mSelectedBusLineNumber;
     private int mRoleId;
@@ -71,6 +75,7 @@ public class MainActivity extends Activity implements LocationSource,
     private CheckBox mDriver;
     private boolean mDriverChecked = false;
     private String mUUID;
+	private LatLng currentlocation;
 
     // 通过设置间隔时间和距离可以控制速度和图标移动的距离
     private static final double DISTANCE = 0.0001;
@@ -102,7 +107,8 @@ public class MainActivity extends Activity implements LocationSource,
      * 初始化AMap对象
      */
     private void init() {
-
+	    currentlocation = new LatLng(0,0);
+	    mStationList = new ArrayList<>();
         mUUID = getUUID(this);
         mLocations = new ArrayList<>();
         // 地图
@@ -150,6 +156,22 @@ public class MainActivity extends Activity implements LocationSource,
 
                 mSelectedBusLineNumber = pos + 1;
                 mSelectedBusLine = "Bus" + mSelectedBusLineNumber;
+
+	            // 读取司机key
+	            SharedPreferences settings = getSharedPreferences(FILENAME, MODE_PRIVATE);
+	            boolean isDriver = settings.getBoolean(DRIVERKEY, false);
+	            mRoleId = settings.getInt(DRIVERLINE_KEY, 0);
+	            if (isDriver && mSelectedBusLineNumber == mRoleId){
+		            mDriverChecked = true;
+		            mDriver.setChecked(true);
+		            mDriver.setButtonDrawable(getResources().getDrawable(R.drawable.driver_on));
+	            }
+	            else
+	            {
+		            mDriver.setButtonDrawable(getResources().getDrawable(R.drawable.driver_off));
+		            mDriverChecked = false;
+		            mDriver.setChecked(false);
+	            }
 
                 Toast.makeText(getApplicationContext(), "你选择的是:" + lines[pos].trim(), Toast.LENGTH_SHORT).show();
             }
@@ -206,6 +228,9 @@ public class MainActivity extends Activity implements LocationSource,
                                     //步骤3：提交
                                     editor.apply();
 
+	                                getStationList();
+	                                postLocation(currentlocation, 0);
+
                                     dialog.dismiss();
                                 }
                             }).setNegativeButton("返回", new DialogInterface.OnClickListener() {//添加返回按钮
@@ -226,6 +251,8 @@ public class MainActivity extends Activity implements LocationSource,
                     Toast.makeText(getApplicationContext(), "已关闭老司机功能", Toast.LENGTH_SHORT).show();
                     mDriver.setButtonDrawable(getResources().getDrawable(R.drawable.driver_off));
                     mDriverChecked = false;
+//	                mRoleId = 0;
+	                postLocation(currentlocation, 0);
                 }
             }
         });
@@ -237,6 +264,7 @@ public class MainActivity extends Activity implements LocationSource,
             mDriverChecked = true;
             mDriver.setChecked(true);
             mDriver.setButtonDrawable(getResources().getDrawable(R.drawable.driver_on));
+            getStationList();
         }
 
         // 初始化离线地图
@@ -360,7 +388,7 @@ public class MainActivity extends Activity implements LocationSource,
     public void onLocationChanged(AMapLocation amapLocation) {
         if (mListener != null && amapLocation != null && amapLocation.getErrorCode() == 0) {
             mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-            LatLng currentlocation = new LatLng(amapLocation.getLatitude(),
+	        currentlocation = new LatLng(amapLocation.getLatitude(),
                     amapLocation.getLongitude());
 //            //添加Marker显示定位位置
 //            if (mMarker == null) {
@@ -376,7 +404,19 @@ public class MainActivity extends Activity implements LocationSource,
 
             // 上传定位信息
             if (amapLocation.getAccuracy() < 80.0) {
-                postLocation(currentlocation);
+	            // 判断班车是否在圆内，类似于地理围栏功能，返回YES，表示进入围栏，返回NO，表示离开围栏。
+	            int stationId = 0;
+	            for (int i = 0; i<mStationList.size(); i++) {
+		            Station station = mStationList.get(i);
+		            LatLng point2 = new LatLng(Double.valueOf(station.getLat()), Double.valueOf(station.getLng()));
+		            float distance = AMapUtils.calculateLineDistance(currentlocation,point2);
+		            if (distance < 100 ) {
+			            stationId = station.getStationId();
+			            break;
+		            }
+	            }
+
+                postLocation(currentlocation, stationId);
             }
         }
     }
@@ -414,99 +454,134 @@ public class MainActivity extends Activity implements LocationSource,
     }
 
     public void getData() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
-                //增加返回值为String的支持
-                .addConverterFactory(ScalarsConverterFactory.create())
-                //增加返回值为Gson的支持(以实体类返回)
-                .addConverterFactory(GsonConverterFactory.create())
-                //增加返回值为Oservable<T>的支持
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        ApiService apiManager = retrofit.create(ApiService.class);//这里采用的是Java的动态代理模式
+	    Retrofit retrofit = new Retrofit.Builder()
+			    .baseUrl(URL)
+			    //增加返回值为String的支持
+			    .addConverterFactory(ScalarsConverterFactory.create())
+			    //增加返回值为Gson的支持(以实体类返回)
+			    .addConverterFactory(GsonConverterFactory.create())
+			    //增加返回值为Oservable<T>的支持
+			    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+			    .build();
+	    ApiService apiManager = retrofit.create(ApiService.class);//这里采用的是Java的动态代理模式
 
-        Call<CoordinateGson> call = apiManager.getCoordinateData(mSelectedBusLineNumber);
-        call.enqueue(new Callback<CoordinateGson>() {
-            @Override
-            public void onResponse(Call<CoordinateGson> call, Response<CoordinateGson> response) {
-                //处理请求成功
+	    Call<CoordinateGson> call = apiManager.getCoordinateData(mSelectedBusLineNumber);
+	    call.enqueue(new Callback<CoordinateGson>() {
+		    @Override
+		    public void onResponse(Call<CoordinateGson> call, Response<CoordinateGson> response) {
+			    //处理请求成功
 
-                if (response.body().getData() == null) {
-                    if (mMarker != null) {
-                        mMarker.setVisible(false);
-                    }
-                    Toast.makeText(getApplicationContext(), mSelectedBusLine.replace("Bus", "") + "号线 没有开启定位", Toast.LENGTH_SHORT).show();
-                    mLocations = new ArrayList<LatLng>();
-                }else{
+			    if (response.body().getData() == null) {
+				    if (mMarker != null) {
+					    mMarker.setVisible(false);
+				    }
+				    Toast.makeText(getApplicationContext(), mSelectedBusLine.replace("Bus", "") + "号线 没有开启定位", Toast.LENGTH_SHORT).show();
+				    mLocations = new ArrayList<LatLng>();
+			    } else {
 
-                    CoordinateGson.DataBean dataBean;
-                    dataBean = response.body().getData();
+				    Coordinate dataBean;
+				    dataBean = response.body().getData();
 
-                    // 设置当前地图显示为当前位置
-                    LatLng latLng = new LatLng(Double.valueOf(dataBean.getLat()), Double.valueOf(dataBean.getLng()));
+				    // 设置当前地图显示为当前位置
+				    LatLng latLng = new LatLng(Double.valueOf(dataBean.getLat()), Double.valueOf(dataBean.getLng()));
 
-                    if (mLocations.size() > 1) {
-                        mLocations.remove(0);
-                    }
+				    if (mLocations.size() > 1) {
+					    mLocations.remove(0);
+				    }
 
-                    mLocations.add(latLng);
+				    mLocations.add(latLng);
 
-                    if (mMarker == null) {
-                        MarkerOptions mMarkerOption = new MarkerOptions();
-                        mMarkerOption.position(latLng);
-                        mMarkerOption.title("班车");
-                        mMarkerOption.draggable(true);
-                        mMarkerOption.anchor(0.5f, 0.5f);
-                        mMarkerOption.icon(
-                                BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                                        .decodeResource(getResources(),
-                                                R.drawable.map_icon_driver_car)));
-                        // 将Marker设置为贴地显示，可以双指下拉看效果
-                        mMarkerOption.setFlat(true);
-                        mMarkerOption.visible(true);
+				    if (mMarker == null) {
+					    MarkerOptions mMarkerOption = new MarkerOptions();
+					    mMarkerOption.position(latLng);
+					    mMarkerOption.title("班车");
+					    mMarkerOption.draggable(true);
+					    mMarkerOption.anchor(0.5f, 0.5f);
+					    mMarkerOption.icon(
+							    BitmapDescriptorFactory.fromBitmap(BitmapFactory
+									    .decodeResource(getResources(),
+											    R.drawable.map_icon_driver_car)));
+					    // 将Marker设置为贴地显示，可以双指下拉看效果
+					    mMarkerOption.setFlat(true);
+					    mMarkerOption.visible(true);
 
-                        //mMarker.setPosition(latLng);
-                        mMarker = mAMap.addMarker(mMarkerOption);
-                        //mMarker.setRotateAngle(-90);
-                    } else {
-                        //mMarker.setPosition(latLng);
-                        mMarker.setVisible(true);
-                    }
+					    //mMarker.setPosition(latLng);
+					    mMarker = mAMap.addMarker(mMarkerOption);
+					    //mMarker.setRotateAngle(-90);
+				    } else {
+					    //mMarker.setPosition(latLng);
+					    mMarker.setVisible(true);
+				    }
 
-                    if (mSelectedBusLineChanged) {
-                        mMarker.setRotateAngle(0);
-                        mMarker.setPosition(latLng);
-                        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
-                        mSelectedBusLineChanged = false;
-                    }
-                }
+				    if (mSelectedBusLineChanged) {
+					    mMarker.setRotateAngle(0);
+					    mMarker.setPosition(latLng);
+					    mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+					    mSelectedBusLineChanged = false;
+				    }
+			    }
 
-                if (mLocations.size() > 1) {
-                    if (mLocations.get(0).latitude != mLocations.get(1).latitude
-                            || mLocations.get(0).longitude != mLocations.get(1).longitude) {
-                        // 距离
-                        //float distance = AMapUtils.calculateLineDistance(mLocations.get(1),mLocations.get(0));
-                        moveLooper();
-                    }
-                }
-            }
+			    if (mLocations.size() > 1) {
+				    if (mLocations.get(0).latitude != mLocations.get(1).latitude
+						    || mLocations.get(0).longitude != mLocations.get(1).longitude) {
+					    // 距离
+					    //float distance = AMapUtils.calculateLineDistance(mLocations.get(1),mLocations.get(0));
+					    moveLooper();
+				    }
+			    }
+		    }
 
-            @Override
-            public void onFailure(Call<CoordinateGson> call, Throwable t) {
-                //处理请求失败
-                if (mMarker != null) {
-                    mMarker.remove();
-                }
-                Toast.makeText(getApplicationContext(), mSelectedBusLine + "获取班车位置出现错误", Toast.LENGTH_SHORT).show();
-            }
-        });
+		    @Override
+		    public void onFailure(Call<CoordinateGson> call, Throwable t) {
+			    //处理请求失败
+			    if (mMarker != null) {
+				    mMarker.remove();
+			    }
+			    Toast.makeText(getApplicationContext(), mSelectedBusLine + "获取班车位置出现错误", Toast.LENGTH_SHORT).show();
+		    }
+	    });
+    }
+
+    public void getStationList() {
+		mStationList = new ArrayList<>();
+	    if (mRoleId == 0) { return; }
+
+	    Retrofit retrofit = new Retrofit.Builder()
+			    .baseUrl(URL)
+			    //增加返回值为String的支持
+			    .addConverterFactory(ScalarsConverterFactory.create())
+			    //增加返回值为Gson的支持(以实体类返回)
+			    .addConverterFactory(GsonConverterFactory.create())
+			    //增加返回值为Oservable<T>的支持
+			    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+			    .build();
+	    ApiService apiManager = retrofit.create(ApiService.class);//这里采用的是Java的动态代理模式
+
+	    Call<StationGson> call = apiManager.getStations(mRoleId);
+	    call.enqueue(new Callback<StationGson>() {
+		    @Override
+		    public void onResponse(Call<StationGson> call, Response<StationGson> response) {
+			    //处理请求成功
+			    if (response.body().getData() != null) {
+
+				    mStationList = response.body().getData();
+
+			    }
+		    }
+
+		    @Override
+		    public void onFailure(Call<StationGson> call, Throwable t) {
+			    //处理请求失败
+			    Toast.makeText(getApplicationContext(), mSelectedBusLine + "获取班车位置出现错误", Toast.LENGTH_SHORT).show();
+		    }
+	    });
 
 //                .subscribeOn(Schedulers.io())
 //                .map(new Func1<CoordinateGson, List<Coordinate>>() {
 //                    @Override
 //                    public List<Coordinate> call(CoordinateGson coordinateGson) { //
 //                        List<Coordinate> coordinatesList = new ArrayList<Coordinate>();
-//                        for (CoordinateGson.DataBean dataBean : coordinateGson.getData()) {
+//                        for (Coordinate dataBean : coordinateGson.getData()) {
 //                            Coordinate Coordinate = new Coordinate();
 //                            Coordinate.setId(String.valueOf(dataBean.getId()));
 //                            Coordinate.setLat(dataBean.getLat());
@@ -539,7 +614,7 @@ public class MainActivity extends Activity implements LocationSource,
 //                });
     }
 
-    public void postLocation(LatLng myLocation) {
+    public void postLocation(LatLng myLocation, int stationId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
                 //增加返回值为String的支持
@@ -561,6 +636,10 @@ public class MainActivity extends Activity implements LocationSource,
         }else{
             coordinate.setRoleId(0);
         }
+
+	    if(stationId > 0){
+		    coordinate.setStationId(stationId);
+	    }
 
         Call<Coordinate> call = apiManager.updateCoordinate(coordinate);
         call.enqueue(new Callback<Coordinate>() {
