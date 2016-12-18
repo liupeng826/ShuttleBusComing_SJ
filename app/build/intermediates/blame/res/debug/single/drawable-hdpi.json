@@ -48,12 +48,12 @@
         "source": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/drawable-hdpi/driver.png"
     },
     {
-        "merged": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/build/intermediates/res/merged/debug/drawable-hdpi/map_icon_fast.png",
-        "source": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/drawable-hdpi/map_icon_fast.png"
-    },
-    {
         "merged": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/build/intermediates/res/merged/debug/drawable-hdpi/offlinearrow_but_pressed.9.png",
         "source": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/drawable-hdpi/offlinearrow_but_pressed.9.png"
+    },
+    {
+        "merged": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/build/intermediates/res/merged/debug/drawable-hdpi/map_icon_fast.png",
+        "source": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/src/main/res/drawable-hdpi/map_icon_fast.png"
     },
     {
         "merged": "/Users/liupeng/Android/AndroidStudio/ShuttleBusComing_SJ/app/build/intermediates/res/merged/debug/drawable-hdpi/traffic_on.png",

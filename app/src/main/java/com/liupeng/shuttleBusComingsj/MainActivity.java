@@ -81,7 +81,7 @@ public class MainActivity extends Activity implements LocationSource,
     private static final double DISTANCE = 0.0001;
 
     private static final int FETCH_TIME_INTERVAL = 7000;
-    final String URL = "http://180.76.169.196:8000/";
+    final String URL = "http://60.205.182.57/";
     final String FILENAME = "ShuttleBusComingsj";
     final String LINE_KEY = "LINE_KEY";
     final String DRIVERLINE_KEY = "DRIVERLINE_KEY";
